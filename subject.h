@@ -12,6 +12,7 @@ public:
     virtual void insert_observer(observer* observer)=0;
     virtual void notify()=0;
     virtual int get_subject_content()=0;
+    virtual int get_subject_position()=0;
 
 };
 #define GRID_TEST_SUBJECT_H

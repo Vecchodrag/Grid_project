@@ -50,19 +50,20 @@ public:
 
 
         }
-        display_menu(pos);
+        display_menu(pos,A_REVERSE);
 
     }
 
-    void display_menu(int highlight){
+    void display_menu(int highlight,attr_t attr){
         for(int i=0;i<5;i++){
             if(i==highlight)
-                wattron(menu_window,A_REVERSE);
+                wattron(menu_window,attr);
             mvwprintw(menu_window, i + 1, 1, options[i].c_str());
-            wattroff(menu_window,A_REVERSE);
+            wattroff(menu_window,attr);
 
         }
         wrefresh(menu_window);
+        refresh();
 
     }
 

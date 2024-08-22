@@ -5,6 +5,8 @@
 
 #ifndef GRID_TEST_GRID_H
 #define GRID_TEST_GRID_H
+
+#include <cstring>
 #include "vector"
 #include "cell.h"
 #include "ncurses.h"
@@ -61,9 +63,12 @@ public:
     void move(int trigger,attr_t attribute){
         init_pair(1,COLOR_CYAN,COLOR_BLACK);
         init_pair(2,COLOR_WHITE,COLOR_BLACK);
+        init_pair(3,COLOR_GREEN,COLOR_BLACK);
+        init_pair(4,COLOR_YELLOW,COLOR_BLACK);
         attr_t menu= COLOR_PAIR(1)|A_REVERSE;
         attr_t grid= COLOR_PAIR(2)|A_REVERSE;
-
+        attr_t input_attr= COLOR_PAIR(3)|A_REVERSE;
+        attr_t selected_menu_item= COLOR_PAIR(4)|A_REVERSE;
         keypad(window,true);
         display(attribute);
         switch(trigger){
@@ -102,37 +107,81 @@ public:
                 break;
 
             case 10:
+                display(selected_menu_item);
                 int choise;
+                menu_options->display_menu(menu_options->getPos(),input_attr);
                 while((choise= wgetch(window))!='x'){
                     if(choise==10){
+                        menu_options->display_menu(menu_options->getPos(),selected_menu_item);
                         cells[current_position]->setCurrentOperation(menu_options->getPos());
-                        int c;
+                        int c=KEY_RIGHT;
                         int x_cell_selected=cells[current_position]->getXGraphicPos(),y_cell_selected=cells[current_position]->getYGraphicPos(),p=current_position;
                         std::string selected_cell_content=cells[current_position]->getContent();
                         do{
                             if(cells[p]->getCurrentOperation()==4){
+                                display(input_attr);
+
                                 char input[10];
-
-                                    wgetstr(window, input);
-
-                                cells[current_position]->setContent(input);
-                                for(int i=cells[current_position]->getContent().length();i<9;i++)
-                                    cells[current_position]->setContent(cells[current_position]->getContent()+' ');
-                                display(grid);
-                                std::cout<<cells[current_position]->getContent()<<std::endl;
+                                bool is_a_number=true;
+                                keypad(window, false);
+                                echo();
+                                curs_set(1);
+                                mvwgetstr(window,cells[p]->getYGraphicPos() ,cells[p]->getXGraphicPos(),input);
+                                curs_set(0);
+                                noecho();
+                                keypad(window, true);
+                                for(int i=0;i<strlen(input);i++) {
+                                    if(!isdigit(input[i]))
+                                        is_a_number = false;
+                                }
+                                if(!is_a_number) {
+                                    printw("that is not a number");
+                                    wrefresh(window);
+                                    refresh();
+                                }
+                                else{
+                                    cells[current_position]->setContent(input);
+                                    for(int i=cells[current_position]->getContent().length();i<9;i++)
+                                        cells[current_position]->setContent(cells[current_position]->getContent()+' ');
+                                    display(grid);
+                                    std::cout<<cells[current_position]->getContent()<<std::endl;
+                                    cells[current_position]->notify();
+                                }
                                 break;
+                            }
+                            else {
+                                for(auto cell: cells){
 
-                                //temporary solution, check input in ncourses
-                                
+                                    if(!cell->isSelected()){
 
+                                        mvwprintw(window, cell->getYGraphicPos(), cell->getXGraphicPos(), cell->getContent().c_str());
+
+                                    }
+                                }
+
+
+                                    chose(c, menu, p);
+
+                                    for(auto cell: cells){
+
+                                        if(cell->isSelected()){
+                                            wattron(window, menu);
+                                            mvwprintw(window, cell->getYGraphicPos(), cell->getXGraphicPos(), cell->getContent().c_str());
+                                            wattroff(window, menu);
+                                        }
+                                    }
+                                wrefresh(window);
+                                    wattron(window, grid);
+                                    mvwprintw(window, y_cell_selected, x_cell_selected, selected_cell_content.c_str());
+                                    wattroff(window, grid);
                             }
 
-                            chose(c,menu,p);
-                            wattron(window,grid);
-                            mvwprintw(window,y_cell_selected,x_cell_selected,selected_cell_content.c_str());
-                            wattroff(window,grid);
 
-                        }while((c=wgetch(window))!='x');
+
+
+
+
+                        }while(!((c=wgetch(window))=='x'&&cells[p]->how_many_subjects()<=0));
                         cells[current_position]->setHighlighted(false);
                         current_position=p;
                         cells[current_position]->setHighlighted(true);
@@ -142,9 +191,10 @@ public:
                         }
                     }
                     menu_options->move(choise);
-                    menu_options->display_menu(menu_options->getPos());
+                    menu_options->display_menu(menu_options->getPos(),input_attr);
 
                 }
+                menu_options->display_menu(menu_options->getPos(),A_REVERSE);
 
             default:
                 break;
@@ -174,6 +224,15 @@ public:
     }
 
     void chose(int trigger,attr_t attr,int selected_position){
+        init_pair(1,COLOR_CYAN,COLOR_BLACK);
+        init_pair(2,COLOR_WHITE,COLOR_BLACK);
+        init_pair(3,COLOR_GREEN,COLOR_BLACK);
+        init_pair(4,COLOR_YELLOW,COLOR_BLACK);
+        attr_t menu= COLOR_PAIR(1)|A_REVERSE;
+        attr_t grid= COLOR_PAIR(2)|A_REVERSE;
+        attr_t input_attr= COLOR_PAIR(3)|A_REVERSE;
+        attr_t selected_menu_item= COLOR_PAIR(4)|A_REVERSE;
+        int last;
         switch(trigger) {
             case KEY_RIGHT:
                 if (current_position < num_columns * num_rows - 1) {
@@ -229,16 +288,27 @@ public:
                 break;
             case 10:
 
+                cells[selected_position]->insert_subject(cells[current_position]);
+                cells[current_position]->insert_observer(cells[selected_position]);
+                cells[current_position]->setSelected(true);
+                cells[selected_position]->notify();
+                break;
 
 
+            case 120:
+                last=cells[selected_position]->get_last_subject_position();
+                cells[selected_position]->erase_last_subject();
+                cells[last]->setSelected(false);
+                cells[last]->erase_last_observer();
+                cells[selected_position]->notify();
 
 
+                wrefresh(window);
 
-
-
-                //select the content in singular cell vector
 
                 break;
+
+
             default:
                 break;
 
@@ -247,6 +317,8 @@ public:
 
         cells[current_position]->setHighlighted(true);
         display(attr);
+
+
 
     }
 
