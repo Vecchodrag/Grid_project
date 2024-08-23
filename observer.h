@@ -10,6 +10,7 @@ public:
     virtual void update()=0;
     virtual void erase_last_subject()=0;
     virtual void insert_subject(subject* subject)=0;
+    virtual int get_observer_position()=0;
 
 
 

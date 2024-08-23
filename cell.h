@@ -103,10 +103,10 @@ public:
 
     }
     int get_subject_position()override{
-        int result=this->y_pos*10+this->x_pos;
-        result-=11;
-
-        return result;
+        return get_position();
+    }
+    int get_observer_position()override{
+        return get_position();
     }
 
     void summatory(){
@@ -170,13 +170,43 @@ public:
 
 
     }
+    int how_many_observers(){
+        int num_observers=0;
+        for(auto observer:observers)
+            num_observers++;
+        return num_observers;
+
+
+    }
+
     int get_last_subject_position(){
         return subjects[how_many_subjects()-1]->get_subject_position();
     }
 
-    int get_position(){
-        int position= y_pos*13+x_pos;
+    int get_position () const{
+        int position= y_pos*10+x_pos;
+        position-=11;
         return position;
+    }
+
+    void erase_specific_observer(int obs_grid_pos){
+        int observer_pos=0;
+        for(auto observer: observers){
+            if(observer->get_observer_position()==obs_grid_pos){
+                if(observer_pos==how_many_observers()-1){
+                    observers.pop_back();
+                    return;
+                }
+                for(int i=observer_pos;i<how_many_observers()-1;i++){
+                    observers[observer_pos]=observers[observer_pos+1];
+                }
+                observers.pop_back();
+
+            }
+                observer_pos++;
+
+        }
+
     }
 
 

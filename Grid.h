@@ -76,6 +76,7 @@ public:
                 if(current_position<num_columns*num_rows-1) {
                     cells[current_position]->setHighlighted(false);
                     current_position++;
+
                 }
                 break;
 
@@ -165,9 +166,9 @@ public:
                                     for(auto cell: cells){
 
                                         if(cell->isSelected()){
-                                            wattron(window, menu);
+                                            wattron(window, selected_menu_item);
                                             mvwprintw(window, cell->getYGraphicPos(), cell->getXGraphicPos(), cell->getContent().c_str());
-                                            wattroff(window, menu);
+                                            wattroff(window, selected_menu_item);
                                         }
                                     }
                                 wrefresh(window);
@@ -238,7 +239,7 @@ public:
                 if (current_position < num_columns * num_rows - 1) {
                     cells[current_position]->setHighlighted(false);
                     current_position++;
-                    if(current_position==selected_position){
+                    if(current_position==selected_position||cells[current_position]->isSelected()){
                         cells[current_position]->setHighlighted(false);
                         current_position++;
 
@@ -251,7 +252,7 @@ public:
                 if (current_position > 0) {
                     cells[current_position]->setHighlighted(false);
                     current_position--;
-                    if(current_position==selected_position){
+                    if(current_position==selected_position||cells[current_position]->isSelected()){
                         cells[current_position]->setHighlighted(false);
                         current_position--;
 
@@ -262,10 +263,10 @@ public:
 
 
             case KEY_UP:
-                if (current_position - num_columns > 0) {
+                if (current_position - num_columns > -1) {
                     cells[current_position]->setHighlighted(false);
                     current_position -= num_columns;
-                    if(current_position==selected_position){
+                    if(current_position==selected_position||cells[current_position]->isSelected()){
                         cells[current_position]->setHighlighted(false);
                         current_position -= num_columns;
 
@@ -275,10 +276,10 @@ public:
 
 
             case KEY_DOWN:
-                if (current_position + num_columns < num_columns * num_rows - 1) {
+                if (current_position + num_columns < num_columns * num_rows) {
                     cells[current_position]->setHighlighted(false);
                     current_position += num_columns;
-                    if(current_position==selected_position){
+                    if(current_position==selected_position||cells[current_position]->isSelected()){
                         cells[current_position]->setHighlighted(false);
                         current_position += num_columns;
 
@@ -299,7 +300,7 @@ public:
                 last=cells[selected_position]->get_last_subject_position();
                 cells[selected_position]->erase_last_subject();
                 cells[last]->setSelected(false);
-                cells[last]->erase_last_observer();
+                cells[last]->erase_specific_observer(cells[selected_position]->get_position());
                 cells[selected_position]->notify();
 
 
