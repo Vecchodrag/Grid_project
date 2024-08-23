@@ -115,6 +115,7 @@ public:
                     if(choise==10){
                         menu_options->display_menu(menu_options->getPos(),selected_menu_item);
                         cells[current_position]->setCurrentOperation(menu_options->getPos());
+                        cells[current_position]->erase_all_subjects();
                         int c=KEY_RIGHT;
                         int x_cell_selected=cells[current_position]->getXGraphicPos(),y_cell_selected=cells[current_position]->getYGraphicPos(),p=current_position;
                         std::string selected_cell_content=cells[current_position]->getContent();
@@ -146,8 +147,9 @@ public:
                                         cells[current_position]->setContent(cells[current_position]->getContent()+' ');
                                     display(grid);
                                     std::cout<<cells[current_position]->getContent()<<std::endl;
+                                    cells[p]->erase_all_subjects();
                                     cells[current_position]->notify();
-                                    cells[current_position]->erase_all_subjects();
+
                                 }
                                 break;
                             }
@@ -163,6 +165,7 @@ public:
 
 
                                 chose(c, menu, p);
+
                                 if(c=='e')
                                     break;
 
@@ -187,6 +190,7 @@ public:
 
 
                         }while(!((c=wgetch(window))=='x'&&cells[p]->how_many_subjects()<=0));
+
                         cells[current_position]->setHighlighted(false);
                         current_position=p;
                         cells[current_position]->setHighlighted(true);
@@ -195,6 +199,10 @@ public:
                             break;
 
                         }
+                        printw(std::to_string(cells[p]->how_many_subjects()).c_str());
+                        refresh();
+
+
                         if(c=='e')
                             break;
                     }
@@ -246,9 +254,16 @@ public:
                 if (current_position < num_columns * num_rows - 1) {
                     cells[current_position]->setHighlighted(false);
                     current_position++;
-                    if(current_position==selected_position||cells[current_position]->isSelected()){
+                    while((current_position==selected_position||cells[current_position]->isSelected())&&current_position<num_columns * num_rows-1){
                         cells[current_position]->setHighlighted(false);
                         current_position++;
+
+                    }
+                    if(current_position>= num_columns * num_rows - 1) {
+                        while (cells[current_position]->isSelected()||current_position==selected_position) {
+                            cells[current_position]->setHighlighted(false);
+                            current_position--;
+                        }
 
                     }
                 }
@@ -256,16 +271,29 @@ public:
 
 
             case KEY_LEFT:
+
                 if (current_position > 0) {
                     cells[current_position]->setHighlighted(false);
                     current_position--;
-                    if(current_position==selected_position||cells[current_position]->isSelected()){
+                    while((current_position==selected_position||cells[current_position]->isSelected())&&current_position>0){
                         cells[current_position]->setHighlighted(false);
                         current_position--;
 
                     }
 
+
+                    if(current_position<=0) {
+                        while (cells[current_position]->isSelected()||current_position==selected_position) {
+                            cells[current_position]->setHighlighted(false);
+                            current_position++;
+                        }
+
+
+                    }
+
+
                 }
+
                 break;
 
 
@@ -273,33 +301,52 @@ public:
                 if (current_position - num_columns > -1) {
                     cells[current_position]->setHighlighted(false);
                     current_position -= num_columns;
-                    if(current_position==selected_position||cells[current_position]->isSelected()){
+                    while((current_position==selected_position||cells[current_position]->isSelected())&&current_position - num_columns > -1){
                         cells[current_position]->setHighlighted(false);
                         current_position -= num_columns;
 
                     }
+                    if(current_position - num_columns <= 0) {
+                        while (cells[current_position]->isSelected()||current_position==selected_position) {
+                            cells[current_position]->setHighlighted(false);
+                            current_position+=num_columns;
+                        }
+                    }
+
                 }
                 break;
 
 
             case KEY_DOWN:
-                if (current_position + num_columns < num_columns * num_rows) {
+                if (current_position + num_columns <num_columns * num_rows) {
                     cells[current_position]->setHighlighted(false);
-                    current_position += num_columns;
-                    if(current_position==selected_position||cells[current_position]->isSelected()){
+                    current_position+=num_columns;
+                    while((current_position==selected_position||cells[current_position]->isSelected())&&current_position + num_columns <num_columns * num_rows){
                         cells[current_position]->setHighlighted(false);
-                        current_position += num_columns;
+                        current_position+=num_columns;
 
                     }
+                    if(current_position + num_columns >=num_columns * num_rows) {
+                        while (cells[current_position]->isSelected()||current_position==selected_position) {
+                            cells[current_position]->setHighlighted(false);
+                            current_position-=num_columns;
+                        }
 
+                    }
                 }
-                break;
+            break;
             case 10:
 
                 cells[selected_position]->insert_subject(cells[current_position]);
                 cells[current_position]->insert_observer(cells[selected_position]);
                 cells[current_position]->setSelected(true);
-                cells[selected_position]->notify();
+            printw(std::to_string(cells[selected_position]->how_many_subjects()).c_str());
+            refresh();
+            if(current_position!=129)
+                chose(KEY_RIGHT,attr,selected_position);
+            else
+                chose(KEY_LEFT,attr,selected_position);
+
                 //cells[selected_position]->list_subjects_contents();
 
 
@@ -312,7 +359,8 @@ public:
                 cells[selected_position]->erase_last_subject();
                 cells[last]->setSelected(false);
                 cells[last]->erase_specific_observer(cells[selected_position]->get_position());
-                cells[selected_position]->notify();
+
+
 
 
                 wrefresh(window);
@@ -325,6 +373,8 @@ public:
             for(auto cell:cells)
                 cell->setSelected(false);
             display(grid);
+            cells[selected_position]->notify();
+
 
 
 

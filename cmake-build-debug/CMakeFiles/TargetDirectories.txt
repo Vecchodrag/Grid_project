@@ -1,0 +1,3 @@
+/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles/Grid_test.dir
+/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles/rebuild_cache.dir

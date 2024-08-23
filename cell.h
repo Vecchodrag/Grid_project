@@ -97,6 +97,7 @@ public:
                 std::cout<<"something went wrong"<<std::endl;
                 break;
         }
+
     }
 
     int get_subject_content()override{
@@ -141,18 +142,12 @@ public:
 
         for(int i=content.length();i<9;i++)
             content=content+' ';
-        std::cout<<content<<std::endl;
-
-
-
-
-        erase_all_subjects();
         notify();
     }
 
     void get_max(){
         int max=subjects[0]->get_subject_content();
-        for(auto subject: subjects){
+        for( auto subject: subjects){
             if(subject->get_subject_content()>max)
                 max=subject->get_subject_content();
         }
