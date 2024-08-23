@@ -199,8 +199,7 @@ public:
                             break;
 
                         }
-                        printw(std::to_string(cells[p]->how_many_subjects()).c_str());
-                        refresh();
+
 
 
                         if(c=='e')
@@ -340,8 +339,7 @@ public:
                 cells[selected_position]->insert_subject(cells[current_position]);
                 cells[current_position]->insert_observer(cells[selected_position]);
                 cells[current_position]->setSelected(true);
-            printw(std::to_string(cells[selected_position]->how_many_subjects()).c_str());
-            refresh();
+
             if(current_position!=129)
                 chose(KEY_RIGHT,attr,selected_position);
             else
