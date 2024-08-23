@@ -78,18 +78,19 @@ public:
     }
 
     void update()override{
-        switch (current_operation) {
+
+        switch (this->current_operation) {
             case 0:
-                get_max();
+                this->get_max();
                 break;
             case 1:
-                get_min();
+                this->get_min();
                 break;
             case 2:
-                mean();
+                this->mean();
                 break;
             case 3:
-                summatory();
+                this->summatory();
                 break;
 
             default:
@@ -109,13 +110,20 @@ public:
         return get_position();
     }
 
+    void list_subjects_contents() {
+        for(auto subject: subjects) {
+            printw(std::to_string(subject->get_subject_content()).c_str());
+            refresh();
+        }
+    }
+
+
     void summatory(){
         int sum=0;
         for(auto subject: subjects){
             sum+=subject->get_subject_content();
         }
-        content=std::to_string(sum);
-        notify();
+        insert_number(sum);
     }
 
     void mean(){
@@ -124,13 +132,20 @@ public:
             sum+=subject->get_subject_content();
             i++;
         }
-        content=std::to_string(sum/i);
-        notify();
+        insert_number(sum/i);
 
     }
 
     void insert_number(int num){
         content=std::to_string(num);
+
+        for(int i=content.length();i<9;i++)
+            content=content+' ';
+        std::cout<<content<<std::endl;
+
+
+
+
         erase_all_subjects();
         notify();
     }
@@ -141,17 +156,18 @@ public:
             if(subject->get_subject_content()>max)
                 max=subject->get_subject_content();
         }
-        content=std::to_string(max);
-        notify();
+        insert_number(max);
     }
     void get_min(){
+
         int min=subjects[0]->get_subject_content();
+
         for(auto subject: subjects){
             if(subject->get_subject_content()<min)
                 min=subject->get_subject_content();
         }
-        content=std::to_string(min);
-        notify();
+
+        insert_number(min);
     }
 
     int getCurrentOperation() const {

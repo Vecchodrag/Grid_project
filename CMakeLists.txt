@@ -9,5 +9,6 @@ add_executable(Grid_test main.cpp
         cell.h
         Menu_option.h
         observer.h
-        subject.h)
+        subject.h
+        Menu_option.h)
 target_link_libraries(Grid_test ${CURSES_LIBRARIES})

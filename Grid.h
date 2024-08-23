@@ -147,6 +147,7 @@ public:
                                     display(grid);
                                     std::cout<<cells[current_position]->getContent()<<std::endl;
                                     cells[current_position]->notify();
+                                    cells[current_position]->erase_all_subjects();
                                 }
                                 break;
                             }
@@ -161,7 +162,9 @@ public:
                                 }
 
 
-                                    chose(c, menu, p);
+                                chose(c, menu, p);
+                                if(c=='e')
+                                    break;
 
                                     for(auto cell: cells){
 
@@ -182,6 +185,7 @@ public:
 
 
 
+
                         }while(!((c=wgetch(window))=='x'&&cells[p]->how_many_subjects()<=0));
                         cells[current_position]->setHighlighted(false);
                         current_position=p;
@@ -189,7 +193,10 @@ public:
                         display(grid);
                         if(cells[p]->getCurrentOperation()==4){
                             break;
+
                         }
+                        if(c=='e')
+                            break;
                     }
                     menu_options->move(choise);
                     menu_options->display_menu(menu_options->getPos(),input_attr);
@@ -293,6 +300,10 @@ public:
                 cells[current_position]->insert_observer(cells[selected_position]);
                 cells[current_position]->setSelected(true);
                 cells[selected_position]->notify();
+                //cells[selected_position]->list_subjects_contents();
+
+
+
                 break;
 
 
@@ -308,6 +319,18 @@ public:
 
 
                 break;
+
+            case 101:
+            cells[selected_position]->update();
+            for(auto cell:cells)
+                cell->setSelected(false);
+            display(grid);
+
+
+
+
+
+
 
 
             default:
