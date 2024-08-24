@@ -219,6 +219,68 @@ public:
         }
 
     }
+     int get_subject_graphic_posY() override {
+        return y_graphic_pos;
+    }
+    int get_subject_graphic_posX()override {
+        return x_graphic_pos;
+    }
+    void display_subjects(attr_t att_subject) {
+        std::string content;
+        for(auto subject: subjects) {
+           wattron(window,att_subject);
+            content=std::to_string(subject->get_subject_content());
+            for(int i=content.length();i<9;i++)
+                content=content+' ';
+            mvwprintw(window,subject->get_subject_graphic_posY(),subject->get_subject_graphic_posX(),content.c_str());
+
+
+            wattroff(window,att_subject);
+
+
+        }
+
+
+    }
+    int get_observer_graphic_posY() override {
+        return y_graphic_pos;
+    }
+
+    int get_observer_graphic_posX()override {
+        return x_graphic_pos;
+    }
+
+    int get_observer_content() override {
+        return stoi(this->content);
+    }
+
+
+    void display_observers(attr_t att_observer) {
+        std::string content;
+        for(auto observer: observers) {
+            wattron(window,att_observer);
+            content=std::to_string(observer->get_observer_content());
+            for(int i=content.length();i<9;i++)
+                content=content+' ';
+            mvwprintw(window,observer->get_observer_graphic_posY(),observer->get_observer_graphic_posX(),content.c_str());
+
+
+            wattroff(window,att_observer);
+
+
+        }
+
+
+    }
+
+    bool is_reachable(int current_position) {
+        bool reachable=true;
+        for(auto observer: observers) {
+            if(observer->get_observer_position()==current_position)
+                reachable=false;
+        }
+        return reachable;
+    }
 
 
 

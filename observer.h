@@ -11,6 +11,9 @@ public:
     virtual void erase_last_subject()=0;
     virtual void insert_subject(subject* subject)=0;
     virtual int get_observer_position()=0;
+    virtual int get_observer_content()=0;
+    virtual int get_observer_graphic_posY()=0;
+    virtual int get_observer_graphic_posX()=0;
 
 
 

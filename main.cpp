@@ -32,6 +32,7 @@ int main() {
 
    while((trigger=wgetch(window))!='x'){
        Grid.move(trigger,grid);
+
     }
 
 

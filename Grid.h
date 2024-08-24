@@ -65,17 +65,23 @@ public:
         init_pair(2,COLOR_WHITE,COLOR_BLACK);
         init_pair(3,COLOR_GREEN,COLOR_BLACK);
         init_pair(4,COLOR_YELLOW,COLOR_BLACK);
+        init_pair(5,COLOR_RED,COLOR_BLACK);
+        init_pair(6,COLOR_BLUE,COLOR_BLACK);
         attr_t menu= COLOR_PAIR(1)|A_REVERSE;
         attr_t grid= COLOR_PAIR(2)|A_REVERSE;
         attr_t input_attr= COLOR_PAIR(3)|A_REVERSE;
         attr_t selected_menu_item= COLOR_PAIR(4)|A_REVERSE;
+        attr_t att_subject=COLOR_PAIR(5)|A_REVERSE;
+        attr_t att_obserber=COLOR_PAIR(6)|A_REVERSE;
         keypad(window,true);
+
         display(attribute);
         switch(trigger){
             case KEY_RIGHT:
                 if(current_position<num_columns*num_rows-1) {
                     cells[current_position]->setHighlighted(false);
                     current_position++;
+
 
                 }
                 break;
@@ -87,6 +93,7 @@ public:
                     cells[current_position]->setHighlighted(false);
                     current_position--;
 
+
                 }
                 break;
 
@@ -96,6 +103,7 @@ public:
                 if (current_position-num_columns>-1) {
                     cells[current_position]->setHighlighted(false);
                     current_position -= num_columns;
+
                 }
                 break;
 
@@ -104,6 +112,7 @@ public:
                 if(current_position+num_columns<num_columns*num_rows){
                     cells[current_position]->setHighlighted(false);
                     current_position+=num_columns;
+
                 }
                 break;
 
@@ -111,6 +120,7 @@ public:
                 display(selected_menu_item);
                 int choise;
                 menu_options->display_menu(menu_options->getPos(),input_attr);
+            cells[current_position]->display_observers(att_obserber);
                 while((choise= wgetch(window))!='x'){
                     if(choise==10){
                         menu_options->display_menu(menu_options->getPos(),selected_menu_item);
@@ -155,14 +165,9 @@ public:
                             }
                             else {
                                 for(auto cell: cells){
-
-                                    if(!cell->isSelected()){
-
+                                    if(!cell->isSelected())
                                         mvwprintw(window, cell->getYGraphicPos(), cell->getXGraphicPos(), cell->getContent().c_str());
-
-                                    }
                                 }
-
 
                                 chose(c, menu, p);
 
@@ -181,6 +186,7 @@ public:
                                     wattron(window, grid);
                                     mvwprintw(window, y_cell_selected, x_cell_selected, selected_cell_content.c_str());
                                     wattroff(window, grid);
+                                cells[p]->display_observers(att_obserber);
                             }
 
 
@@ -216,9 +222,10 @@ public:
 
         }
         cells[current_position]->setHighlighted(true);
-        display(attribute);
 
-
+        display(grid);
+        cells[current_position]->display_subjects(att_subject);
+        cells[current_position]->display_observers(att_obserber);
 
 
     }
@@ -231,7 +238,9 @@ public:
             mvwprintw(window,cell->getYGraphicPos(),cell->getXGraphicPos(),cell->getContent().c_str());
             wattroff(window,attr);
 
+
         }
+
         wrefresh(window);
         refresh();
 
@@ -248,20 +257,24 @@ public:
         attr_t input_attr= COLOR_PAIR(3)|A_REVERSE;
         attr_t selected_menu_item= COLOR_PAIR(4)|A_REVERSE;
         int last;
+        bool reachable;
         switch(trigger) {
             case KEY_RIGHT:
                 if (current_position < num_columns * num_rows - 1) {
                     cells[current_position]->setHighlighted(false);
                     current_position++;
-                    while((current_position==selected_position||cells[current_position]->isSelected())&&current_position<num_columns * num_rows-1){
+                    reachable=cells[selected_position]->is_reachable(current_position);
+                    while((current_position==selected_position||cells[current_position]->isSelected()||!reachable)&&current_position<num_columns * num_rows-1){
                         cells[current_position]->setHighlighted(false);
                         current_position++;
+                        reachable=cells[selected_position]->is_reachable(current_position);
 
                     }
                     if(current_position>= num_columns * num_rows - 1) {
-                        while (cells[current_position]->isSelected()||current_position==selected_position) {
+                        while (cells[current_position]->isSelected()||current_position==selected_position||!reachable) {
                             cells[current_position]->setHighlighted(false);
                             current_position--;
+                            reachable=cells[selected_position]->is_reachable(current_position);
                         }
 
                     }
@@ -274,17 +287,20 @@ public:
                 if (current_position > 0) {
                     cells[current_position]->setHighlighted(false);
                     current_position--;
-                    while((current_position==selected_position||cells[current_position]->isSelected())&&current_position>0){
+                    reachable=cells[selected_position]->is_reachable(current_position);
+                    while((current_position==selected_position||cells[current_position]->isSelected()||!reachable)&&current_position>0){
                         cells[current_position]->setHighlighted(false);
                         current_position--;
+                        reachable=cells[selected_position]->is_reachable(current_position);
 
                     }
 
 
                     if(current_position<=0) {
-                        while (cells[current_position]->isSelected()||current_position==selected_position) {
+                        while (cells[current_position]->isSelected()||current_position==selected_position||!reachable) {
                             cells[current_position]->setHighlighted(false);
                             current_position++;
+                            reachable=cells[selected_position]->is_reachable(current_position);
                         }
 
 
@@ -300,15 +316,18 @@ public:
                 if (current_position - num_columns > -1) {
                     cells[current_position]->setHighlighted(false);
                     current_position -= num_columns;
-                    while((current_position==selected_position||cells[current_position]->isSelected())&&current_position - num_columns > -1){
+                    reachable=cells[selected_position]->is_reachable(current_position);
+                    while((current_position==selected_position||cells[current_position]->isSelected()||!reachable)&&current_position - num_columns > -1){
                         cells[current_position]->setHighlighted(false);
                         current_position -= num_columns;
+                        reachable=cells[selected_position]->is_reachable(current_position);
 
                     }
                     if(current_position - num_columns <= 0) {
-                        while (cells[current_position]->isSelected()||current_position==selected_position) {
+                        while (cells[current_position]->isSelected()||current_position==selected_position||!reachable) {
                             cells[current_position]->setHighlighted(false);
                             current_position+=num_columns;
+                            reachable=cells[selected_position]->is_reachable(current_position);
                         }
                     }
 
@@ -320,15 +339,18 @@ public:
                 if (current_position + num_columns <num_columns * num_rows) {
                     cells[current_position]->setHighlighted(false);
                     current_position+=num_columns;
-                    while((current_position==selected_position||cells[current_position]->isSelected())&&current_position + num_columns <num_columns * num_rows){
+                    reachable=cells[selected_position]->is_reachable(current_position);
+                    while((current_position==selected_position||cells[current_position]->isSelected()||!reachable)&&current_position + num_columns <num_columns * num_rows){
                         cells[current_position]->setHighlighted(false);
                         current_position+=num_columns;
+                        reachable=cells[selected_position]->is_reachable(current_position);
 
                     }
                     if(current_position + num_columns >=num_columns * num_rows) {
-                        while (cells[current_position]->isSelected()||current_position==selected_position) {
+                        while (cells[current_position]->isSelected()||current_position==selected_position||!reachable) {
                             cells[current_position]->setHighlighted(false);
                             current_position-=num_columns;
+                            reachable=cells[selected_position]->is_reachable(current_position);
                         }
 
                     }
@@ -389,6 +411,7 @@ public:
 
         cells[current_position]->setHighlighted(true);
         display(attr);
+
 
 
 
