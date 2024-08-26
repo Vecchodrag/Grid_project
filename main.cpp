@@ -1,6 +1,7 @@
 #include <iostream>
 #include "ncurses.h"
 #include "Grid.h"
+#include "info_menu.h"
 #include "Menu_option.h"
 
 int main() {
@@ -28,6 +29,7 @@ int main() {
 
 
     Grid Grid(window);
+    info_menu info_menu;
     int trigger=KEY_LEFT;
 
     Grid.display(grid);

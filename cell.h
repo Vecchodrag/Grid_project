@@ -2,6 +2,8 @@
 // Created by edoardo on 25/07/24.
 //
 
+#include <cmath>
+#include <math.h>
 #ifndef GRID_TEST_CELL_H
 #include "string"
 #include "ncurses.h"
@@ -100,8 +102,8 @@ public:
 
     }
 
-    int get_subject_content()override{
-        return stoi(this->content);
+    std::string get_subject_content()override{
+        return this->content;
 
     }
     int get_subject_position()override{
@@ -113,37 +115,43 @@ public:
 
     void list_subjects_contents() {
         for(auto subject: subjects) {
-            printw(std::to_string(subject->get_subject_content()).c_str());
+            printw(subject->get_subject_content().c_str());
             refresh();
         }
     }
 
 
     void summatory(){
-        int sum=0;
+        float sum=0;
         for(auto subject: subjects){
-            sum+=subject->get_subject_content();
+            sum+=atof(subject->get_subject_content().c_str());
         }
-        if(sum>=100000000) {
+        std::string sum_string=std::to_string(sum);
+        if(sum>100000000){
             printw("the result is to big to be printed");
             erase_all_subjects();
             sum=0;
         }
         insert_number(sum);
+
     }
 
     void mean(){
-        int sum=0,i=0;
+        float sum=0;
+        int i=0;
         for(auto subject: subjects){
-            sum+=subject->get_subject_content();
+            sum+=atof(subject->get_subject_content().c_str());
             i++;
         }
         insert_number(sum/i);
 
     }
 
-    void insert_number(int num){
+    void insert_number(float num){
         content=std::to_string(num);
+        content.erase(8,content.length()-8);
+        if(content[8]=='.')
+            content[8]=' ';
 
         for(int i=content.length();i<9;i++)
             content=content+' ';
@@ -151,20 +159,20 @@ public:
     }
 
     void get_max(){
-        int max=subjects[0]->get_subject_content();
+        float max=atof(subjects[0]->get_subject_content().c_str());
         for( auto subject: subjects){
-            if(subject->get_subject_content()>max)
-                max=subject->get_subject_content();
+            if(atof(subject->get_subject_content().c_str())>max)
+                max=atof(subject->get_subject_content().c_str());
         }
         insert_number(max);
     }
     void get_min(){
 
-        int min=subjects[0]->get_subject_content();
+        float min=atof(subjects[0]->get_subject_content().c_str());
 
         for(auto subject: subjects){
-            if(subject->get_subject_content()<min)
-                min=subject->get_subject_content();
+            if(atof(subject->get_subject_content().c_str())<min)
+                min=atof(subject->get_subject_content().c_str());
         }
 
         insert_number(min);
@@ -234,7 +242,7 @@ public:
         std::string content;
         for(auto subject: subjects) {
            wattron(window,att_subject);
-            content=std::to_string(subject->get_subject_content());
+            content=subject->get_subject_content();
             for(int i=content.length();i<9;i++)
                 content=content+' ';
             mvwprintw(window,subject->get_subject_graphic_posY(),subject->get_subject_graphic_posX(),content.c_str());
@@ -255,8 +263,8 @@ public:
         return x_graphic_pos;
     }
 
-    int get_observer_content() override {
-        return stoi(this->content);
+    std::string get_observer_content() override {
+        return this->content;
     }
 
 
@@ -264,7 +272,7 @@ public:
         std::string content;
         for(auto observer: observers) {
             wattron(window,att_observer);
-            content=std::to_string(observer->get_observer_content());
+            content=observer->get_observer_content();
             for(int i=content.length();i<9;i++)
                 content=content+' ';
             mvwprintw(window,observer->get_observer_graphic_posY(),observer->get_observer_graphic_posX(),content.c_str());
@@ -286,6 +294,8 @@ public:
         }
         return reachable;
     }
+
+
 
 
 

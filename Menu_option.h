@@ -14,15 +14,22 @@ class Menu_option{
 public:
     Menu_option(): pos(0) {
         int Xmax = getmaxx(stdscr);
-        menu_window = newwin(7, (Xmax / 2) - 1, 0, Xmax / 4);
+        menu_window = newwin(7, (Xmax / 2) - 1, 2, Xmax / 4);
         box(menu_window, 0, 0);
         refresh();
         wrefresh(menu_window);
 
+
         for (int i = 0; i < 5; i++) {
+            int length=options[i].length();
+            for (int j = 0; j < (Xmax/2)-3-length; j++) {
+                options[i]=options[i]+' ';
+            }
             mvwprintw(menu_window, i + 1, 1, options[i].c_str());
         }
         keypad(menu_window,true);
+
+        mvwprintw(menu_window,0,42," Options ");
         wrefresh(menu_window);
 
     }

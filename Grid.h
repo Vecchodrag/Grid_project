@@ -64,6 +64,23 @@ public:
             num_columns++;
         }
         wrefresh(window);
+        int pos=Ymax/4+1;
+        std::string number;
+        for(int i=1;i<Ymax/4+1;i++) {
+            number=std::to_string(i);
+            if(number.length()==2)
+                mvprintw(pos,Xmax/4-3,number.c_str());
+            else
+                mvprintw(pos,Xmax/4-2,number.c_str());
+            pos+=2;
+        }
+        pos=Xmax/4+5;
+        for(int i=1;i<Xmax/20+1;i++) {
+            number=std::to_string(i);
+            mvprintw(Ymax/4-1,pos,number.c_str());
+            pos+=10;
+        }
+        refresh();
 
     }
 
@@ -171,7 +188,7 @@ public:
                                 noecho();
                                 keypad(window, true);
                                 for(int i=0;i<shield_content.length();i++) {
-                                    if(!isdigit(shield_content[i]))
+                                    if(!isdigit(shield_content[i])&&(shield_content[i]!='.'&&shield_content[0]!='-'))
                                         is_a_number = false;
                                 }
                                 if(!is_a_number) {
