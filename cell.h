@@ -124,6 +124,11 @@ public:
         for(auto subject: subjects){
             sum+=subject->get_subject_content();
         }
+        if(sum>=100000000) {
+            printw("the result is to big to be printed");
+            erase_all_subjects();
+            sum=0;
+        }
         insert_number(sum);
     }
 

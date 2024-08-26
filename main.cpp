@@ -28,12 +28,16 @@ int main() {
 
 
     Grid Grid(window);
-    int trigger;
+    int trigger=KEY_LEFT;
 
-   while((trigger=wgetch(window))!='x'){
+    Grid.display(grid);
+
+   do{
+
+
        Grid.move(trigger,grid);
 
-    }
+    }while((trigger=wgetch(window))!='x');
 
 
 

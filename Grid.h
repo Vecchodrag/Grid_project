@@ -17,27 +17,9 @@ class Grid{
 public:
     explicit Grid(WINDOW* win):window(win),current_position(0){
         int Ymax,Xmax;
-        num_columns=num_rows=1;
+
         getmaxyx(stdscr,Ymax,Xmax);
-        for(int i=2;i<(Ymax/2)-1;i+=2){
-            for(int j=1;j<(Xmax/2)-2;j++){
-                mvwprintw(window,i,j,"-");;
-                wrefresh(window);
-            }
-            num_rows++;
-
-        }
-
-        for(int j=10;j<(Xmax/2)-2;j+=10){
-            for(int i=1;i<(Ymax/2)-1;i++){
-                if(!(i%2))
-                    mvwprintw(window,i,j,"+");
-                else
-                    mvwprintw(window,i,j,"|");;
-                wrefresh(window);
-            }
-            num_columns++;
-        }
+        build_grid();
         int Ypos=1;
 
         for(int i=1;i<(Ymax/2)-1;i+=2){
@@ -59,6 +41,31 @@ public:
 
 
     }
+    void build_grid() {int Ymax,Xmax;
+        num_columns=num_rows=1;
+        getmaxyx(stdscr,Ymax,Xmax);
+        for(int i=2;i<(Ymax/2)-1;i+=2){
+            for(int j=1;j<(Xmax/2)-2;j++){
+                mvwprintw(window,i,j,"-");;
+                wrefresh(window);
+            }
+            num_rows++;
+
+        }
+
+        for(int j=10;j<(Xmax/2)-2;j+=10){
+            for(int i=1;i<(Ymax/2)-1;i++){
+                if(!(i%2))
+                    mvwprintw(window,i,j,"+");
+                else
+                    mvwprintw(window,i,j,"|");;
+                wrefresh(window);
+            }
+            num_columns++;
+        }
+        wrefresh(window);
+
+    }
 
     void move(int trigger,attr_t attribute){
         init_pair(1,COLOR_CYAN,COLOR_BLACK);
@@ -74,6 +81,8 @@ public:
         attr_t att_subject=COLOR_PAIR(5)|A_REVERSE;
         attr_t att_obserber=COLOR_PAIR(6)|A_REVERSE;
         keypad(window,true);
+
+
 
         display(attribute);
         switch(trigger){
@@ -126,39 +135,80 @@ public:
                         menu_options->display_menu(menu_options->getPos(),selected_menu_item);
                         cells[current_position]->setCurrentOperation(menu_options->getPos());
                         cells[current_position]->erase_all_subjects();
-                        int c=KEY_RIGHT;
+                        int c;
+                        if (cells[current_position]->get_position()!=129)
+                            c=KEY_RIGHT;
+                        else
+                            c=KEY_LEFT;
                         int x_cell_selected=cells[current_position]->getXGraphicPos(),y_cell_selected=cells[current_position]->getYGraphicPos(),p=current_position;
                         std::string selected_cell_content=cells[current_position]->getContent();
                         do{
                             if(cells[p]->getCurrentOperation()==4){
                                 display(input_attr);
 
-                                char input[10];
+
+
+
+                                char shield[50];
+                                for(int i=0;i<50;i++)
+                                    shield[i]='0';
+                                char input[8];
+
                                 bool is_a_number=true;
                                 keypad(window, false);
                                 echo();
                                 curs_set(1);
-                                mvwgetstr(window,cells[p]->getYGraphicPos() ,cells[p]->getXGraphicPos(),input);
+                                mvwgetstr(window,cells[p]->getYGraphicPos() ,cells[p]->getXGraphicPos(),shield);
+                                std::string shield_content=shield;
+                                for(int i=0;i<50;i++)
+                                    shield[i]='0';
+
+                                printw(shield_content.c_str());
+                                refresh();
+
+
                                 curs_set(0);
                                 noecho();
                                 keypad(window, true);
-                                for(int i=0;i<strlen(input);i++) {
-                                    if(!isdigit(input[i]))
+                                for(int i=0;i<shield_content.length();i++) {
+                                    if(!isdigit(shield_content[i]))
                                         is_a_number = false;
                                 }
                                 if(!is_a_number) {
                                     printw("that is not a number");
                                     wrefresh(window);
                                     refresh();
+
+
+
+
+
                                 }
+
                                 else{
-                                    cells[current_position]->setContent(input);
+                                    if(shield_content.length()>8) {
+                                        printw("input is to long: max input length is 8 digits");
+                                        build_grid();
+                                        break;
+                                    }
+
+                                    if(shield_content.length()==0) {
+                                        shield_content='0';
+                                    }
+
+
+
+                                    cells[current_position]->setContent(shield_content);
                                     for(int i=cells[current_position]->getContent().length();i<9;i++)
                                         cells[current_position]->setContent(cells[current_position]->getContent()+' ');
                                     display(grid);
                                     std::cout<<cells[current_position]->getContent()<<std::endl;
                                     cells[p]->erase_all_subjects();
                                     cells[current_position]->notify();
+
+
+
+
 
                                 }
                                 break;
@@ -168,6 +218,9 @@ public:
                                     if(!cell->isSelected())
                                         mvwprintw(window, cell->getYGraphicPos(), cell->getXGraphicPos(), cell->getContent().c_str());
                                 }
+                                if(check_if_last_cell(p)&&c!='x')
+                                    c='e';
+
 
                                 chose(c, menu, p);
 
@@ -258,6 +311,7 @@ public:
         attr_t selected_menu_item= COLOR_PAIR(4)|A_REVERSE;
         int last;
         bool reachable;
+
         switch(trigger) {
             case KEY_RIGHT:
                 if (current_position < num_columns * num_rows - 1) {
@@ -361,11 +415,12 @@ public:
                 cells[selected_position]->insert_subject(cells[current_position]);
                 cells[current_position]->insert_observer(cells[selected_position]);
                 cells[current_position]->setSelected(true);
-
-            if(current_position!=129)
-                chose(KEY_RIGHT,attr,selected_position);
-            else
-                chose(KEY_LEFT,attr,selected_position);
+            if(!check_if_last_cell(selected_position)) {
+                if(current_position!=129)
+                    chose(KEY_RIGHT,attr,selected_position);
+                else
+                    chose(KEY_LEFT,attr,selected_position);
+            }
 
                 //cells[selected_position]->list_subjects_contents();
 
@@ -415,6 +470,17 @@ public:
 
 
 
+    }
+    bool check_if_last_cell(int selected_position) {
+        int num_sel_cells=1;
+        for(auto cell:cells){
+            if(cell->isSelected())
+                num_sel_cells++;
+        }
+        num_sel_cells+=cells[selected_position]->how_many_observers();
+        if(num_sel_cells==130)
+            return true;
+        return false;
     }
 
 private:
