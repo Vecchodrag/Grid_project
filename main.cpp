@@ -29,7 +29,7 @@ int main() {
 
 
     Grid Grid(window);
-    info_menu info_menu;
+
     int trigger=KEY_LEFT;
 
     Grid.display(grid);

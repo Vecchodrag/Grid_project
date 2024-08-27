@@ -12,6 +12,8 @@
 #include "ncurses.h"
 #include "memory"
 #include "Menu_option.h"
+#include "info_menu.h"
+
 
 class Grid{
 public:
@@ -38,6 +40,7 @@ public:
         }
 
     menu_options= new Menu_option;
+        info_menu_=new info_menu;
 
 
     }
@@ -187,12 +190,17 @@ public:
                                 curs_set(0);
                                 noecho();
                                 keypad(window, true);
-                                for(int i=0;i<shield_content.length();i++) {
-                                    if(!isdigit(shield_content[i])&&(shield_content[i]!='.'&&shield_content[0]!='-'))
+
+                                for(int i=0,dot=0,minus=0;i<shield_content.length();i++) {
+                                    if(shield_content[i]=='.')
+                                        dot++;
+                                    if(shield_content[i]=='-')
+                                        minus++;
+                                    if(!isdigit(shield_content[i])&&(shield_content[i]!='.'&&shield_content[0]!='-')||dot>1||minus>1)
                                         is_a_number = false;
                                 }
                                 if(!is_a_number) {
-                                    printw("that is not a number");
+                                    info_menu_->show_info("that is not a number");
                                     wrefresh(window);
                                     refresh();
 
@@ -204,7 +212,7 @@ public:
 
                                 else{
                                     if(shield_content.length()>8) {
-                                        printw("input is to long: max input length is 8 digits");
+                                        info_menu_->show_info("input is to long: max input length is 8 digits");
                                         build_grid();
                                         break;
                                     }
@@ -505,6 +513,8 @@ private:
     int num_columns, num_rows, current_position;
     WINDOW* window;
     Menu_option* menu_options;
+    info_menu* info_menu_;
+
 
 };
 
