@@ -4,15 +4,24 @@
 
 #include <cmath>
 #include <math.h>
+
+
+
+
 #ifndef GRID_TEST_CELL_H
+
 #include "string"
 #include "ncurses.h"
 #include "observer.h"
 #include "subject.h"
+
+
+
 class Cell: public observer,public subject{
 public:
-    Cell(int X_pos,int Y_pos,int X_graphic_pos, int Y_graphic_pos,WINDOW* win, std::string cont): x_pos(X_pos),x_graphic_pos(X_graphic_pos),y_pos(Y_pos),y_graphic_pos(Y_graphic_pos),content(cont),window(win),highlighted(
-            false),selected(false){}
+    Cell(int X_pos,int Y_pos,int X_graphic_pos, int Y_graphic_pos,WINDOW* win, std::string cont,WINDOW* i): x_pos(X_pos),x_graphic_pos(X_graphic_pos),y_pos(Y_pos),y_graphic_pos(Y_graphic_pos),content(cont),window(win),highlighted(
+
+            false),selected(false),current_operation(4),info_window((i)){}
 
     int getYGraphicPos() const {
         return y_graphic_pos;
@@ -55,7 +64,8 @@ public:
     }
 
     void erase_all_subjects(){
-        for(auto subject:subjects){
+        for(int i=how_many_subjects()-1;i>=0;i--){
+            subjects[i]->erase_specific_observer(this->get_position());
             erase_last_subject();
         }
     }
@@ -93,10 +103,11 @@ public:
                 break;
             case 3:
                 this->summatory();
+
                 break;
 
             default:
-                std::cout<<"something went wrong"<<std::endl;
+
                 break;
         }
 
@@ -128,12 +139,27 @@ public:
         }
         std::string sum_string=std::to_string(sum);
         if(sum>100000000){
-            printw("the result is to big to be printed");
+            clean();
+            mvwprintw(info_window,1,1,"the result is to big to display.");
+            mvwprintw(info_window,2,1,"Press a key to continue: ");
+            wrefresh(info_window);
+
+            getch();
+
+
+
             erase_all_subjects();
+            setCurrentOperation(4);
             sum=0;
         }
         insert_number(sum);
 
+
+    }
+    void clean() {
+        int ymax=getmaxy(stdscr);
+        for(int i=1;i<ymax/2-1;i++)
+            mvwprintw(info_window,i,1,"                                      ");
     }
 
     void mean(){
@@ -213,7 +239,7 @@ public:
         return position;
     }
 
-    void erase_specific_observer(int obs_grid_pos){
+    void erase_specific_observer(int obs_grid_pos) override{
         int observer_pos=0;
         for(auto observer: observers){
             if(observer->get_observer_position()==obs_grid_pos){
@@ -295,10 +321,13 @@ public:
         return reachable;
     }
 
+    [[nodiscard]] int x_pos1() const {
+        return x_pos;
+    }
 
-
-
-
+    [[nodiscard]] int y_pos1() const {
+        return y_pos;
+    }
 
 private:
     int x_pos,y_pos,x_graphic_pos,y_graphic_pos;
@@ -309,7 +338,12 @@ private:
     std::vector<observer*> observers;
     int current_operation;
     bool selected;
-public:
+    WINDOW* info_window;
+
+
+
+
+
 
 
 

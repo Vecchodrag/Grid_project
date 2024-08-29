@@ -19,15 +19,18 @@ class Grid{
 public:
     explicit Grid(WINDOW* win):window(win),current_position(0){
         int Ymax,Xmax;
-
         getmaxyx(stdscr,Ymax,Xmax);
+         WINDOW* info_window=newwin(Ymax/2,40,Ymax/4,0);
+        box(info_window,0,0);
+
+
         build_grid();
         int Ypos=1;
 
         for(int i=1;i<(Ymax/2)-1;i+=2){
             int Xpos=1;
             for(int j=1;j<(Xmax/2)-2;j+=10){
-                Cell* cell= new Cell(Xpos,Ypos,j,i,win,std::to_string((Ypos-1)*num_columns+Xpos));
+                Cell* cell= new Cell(Xpos,Ypos,j,i,win,std::to_string(0),info_window);
                 for(int k=cell->getContent().length();k<9;k++)
                     cell->setContent(cell->getContent()+' ');
                 cells.push_back(cell);
@@ -40,7 +43,7 @@ public:
         }
 
     menu_options= new Menu_option;
-        info_menu_=new info_menu;
+        info_menu_=new info_menu(info_window);
 
 
     }
@@ -172,18 +175,19 @@ public:
                                 char shield[50];
                                 for(int i=0;i<50;i++)
                                     shield[i]='0';
-                                char input[8];
+
 
                                 bool is_a_number=true;
                                 keypad(window, false);
                                 echo();
                                 curs_set(1);
                                 mvwgetstr(window,cells[p]->getYGraphicPos() ,cells[p]->getXGraphicPos(),shield);
+                                build_grid();
                                 std::string shield_content=shield;
                                 for(int i=0;i<50;i++)
                                     shield[i]='0';
 
-                                printw(shield_content.c_str());
+
                                 refresh();
 
 
@@ -200,7 +204,9 @@ public:
                                         is_a_number = false;
                                 }
                                 if(!is_a_number) {
-                                    info_menu_->show_info("that is not a number");
+                                    info_menu_->clean();
+                                    info_menu_->show_info("that is not a number, press a key to  continue:",1);
+                                    getch();
                                     wrefresh(window);
                                     refresh();
 
@@ -212,8 +218,10 @@ public:
 
                                 else{
                                     if(shield_content.length()>8) {
-                                        info_menu_->show_info("input is to long: max input length is 8 digits");
+                                        info_menu_->clean();
+                                        info_menu_->show_info("input is to long: max input length is 8 digits, press a key to continue:",1);
                                         build_grid();
+                                        getch();
                                         break;
                                     }
 
@@ -227,7 +235,7 @@ public:
                                     for(int i=cells[current_position]->getContent().length();i<9;i++)
                                         cells[current_position]->setContent(cells[current_position]->getContent()+' ');
                                     display(grid);
-                                    std::cout<<cells[current_position]->getContent()<<std::endl;
+
                                     cells[p]->erase_all_subjects();
                                     cells[current_position]->notify();
 
@@ -238,7 +246,7 @@ public:
                                 }
                                 break;
                             }
-                            else {
+
                                 for(auto cell: cells){
                                     if(!cell->isSelected())
                                         mvwprintw(window, cell->getYGraphicPos(), cell->getXGraphicPos(), cell->getContent().c_str());
@@ -265,7 +273,7 @@ public:
                                     mvwprintw(window, y_cell_selected, x_cell_selected, selected_cell_content.c_str());
                                     wattroff(window, grid);
                                 cells[p]->display_observers(att_obserber);
-                            }
+
 
 
 
@@ -304,6 +312,7 @@ public:
         display(grid);
         cells[current_position]->display_subjects(att_subject);
         cells[current_position]->display_observers(att_obserber);
+        info_menu_->display_cell_info(cells[current_position]);
 
 
     }
@@ -330,12 +339,15 @@ public:
         init_pair(2,COLOR_WHITE,COLOR_BLACK);
         init_pair(3,COLOR_GREEN,COLOR_BLACK);
         init_pair(4,COLOR_YELLOW,COLOR_BLACK);
-        attr_t menu= COLOR_PAIR(1)|A_REVERSE;
+        init_pair(5,COLOR_RED,COLOR_BLACK);
+        init_pair(6,COLOR_BLUE,COLOR_BLACK);
         attr_t grid= COLOR_PAIR(2)|A_REVERSE;
-        attr_t input_attr= COLOR_PAIR(3)|A_REVERSE;
-        attr_t selected_menu_item= COLOR_PAIR(4)|A_REVERSE;
+
         int last;
         bool reachable;
+        info_menu_->show_info("Use arrow keys to move in the grid.   When you want to select a cell, press enter.                                If you want to exit or go back, press x. To get the result of the selected  operation, press e. You cannot select observer cells as a subject.",14);
+
+
 
         switch(trigger) {
             case KEY_RIGHT:
@@ -447,7 +459,7 @@ public:
                     chose(KEY_LEFT,attr,selected_position);
             }
 
-                //cells[selected_position]->list_subjects_contents();
+
 
 
 
