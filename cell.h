@@ -157,7 +157,7 @@ public:
 
     }
     void clean() {
-        int ymax=getmaxy(stdscr);
+        int ymax=55;
         for(int i=1;i<ymax/2-1;i++)
             mvwprintw(info_window,i,1,"                                      ");
     }

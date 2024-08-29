@@ -18,8 +18,8 @@
 class Grid{
 public:
     explicit Grid(WINDOW* win):window(win),current_position(0){
-        int Ymax,Xmax;
-        getmaxyx(stdscr,Ymax,Xmax);
+        int Ymax=55,Xmax=204;
+
          WINDOW* info_window=newwin(Ymax/2,40,Ymax/4,0);
         box(info_window,0,0);
 
@@ -47,9 +47,10 @@ public:
 
 
     }
-    void build_grid() {int Ymax,Xmax;
+    void build_grid() {
+        int Ymax=55,Xmax=204;
         num_columns=num_rows=1;
-        getmaxyx(stdscr,Ymax,Xmax);
+
         for(int i=2;i<(Ymax/2)-1;i+=2){
             for(int j=1;j<(Xmax/2)-2;j++){
                 mvwprintw(window,i,j,"-");;
@@ -186,6 +187,7 @@ public:
                                 std::string shield_content=shield;
                                 for(int i=0;i<50;i++)
                                     shield[i]='0';
+
 
 
                                 refresh();
