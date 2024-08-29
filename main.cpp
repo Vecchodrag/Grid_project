@@ -16,8 +16,11 @@ int main() {
     attr_t grid= COLOR_PAIR(2)|A_REVERSE;
     start_color();
 
-    int Xmax,Ymax;
-    getmaxyx(stdscr,Ymax,Xmax);
+    int Xmax=204,Ymax=55;
+
+    printw(std::to_string(Ymax).c_str());
+    printw(std::to_string(Xmax).c_str());
+    wresize(stdscr, 55,204);
 
 
     WINDOW * window= newwin(Ymax/2,(Xmax/2)-1,Ymax/4,Xmax/4);

@@ -13,7 +13,7 @@
 class Menu_option{
 public:
     Menu_option(): pos(0) {
-        int Xmax = getmaxx(stdscr);
+        int Xmax = 204;
         menu_window = newwin(7, (Xmax / 2) - 1, 2, Xmax / 4);
         box(menu_window, 0, 0);
         refresh();
