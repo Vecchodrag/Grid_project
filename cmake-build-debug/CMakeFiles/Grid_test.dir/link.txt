@@ -1,1 +1,1 @@
-/usr/bin/c++ -g CMakeFiles/Grid_test.dir/main.cpp.o -o Grid_test  -lcurses /usr/lib/x86_64-linux-gnu/libform.so
+/usr/bin/c++ -g CMakeFiles/Grid_test.dir/main.cpp.o CMakeFiles/Grid_test.dir/cell.cpp.o CMakeFiles/Grid_test.dir/Grid.cpp.o CMakeFiles/Grid_test.dir/Menu_option.cpp.o CMakeFiles/Grid_test.dir/info_menu.cpp.o -o Grid_test  -lcurses /usr/lib/x86_64-linux-gnu/libform.so

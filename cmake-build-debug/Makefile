@@ -129,6 +129,102 @@ Grid_test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/build
 .PHONY : Grid_test/fast
 
+Grid.o: Grid.cpp.o
+.PHONY : Grid.o
+
+# target to build an object file
+Grid.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/Grid.cpp.o
+.PHONY : Grid.cpp.o
+
+Grid.i: Grid.cpp.i
+.PHONY : Grid.i
+
+# target to preprocess a source file
+Grid.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/Grid.cpp.i
+.PHONY : Grid.cpp.i
+
+Grid.s: Grid.cpp.s
+.PHONY : Grid.s
+
+# target to generate assembly for a file
+Grid.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/Grid.cpp.s
+.PHONY : Grid.cpp.s
+
+Menu_option.o: Menu_option.cpp.o
+.PHONY : Menu_option.o
+
+# target to build an object file
+Menu_option.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/Menu_option.cpp.o
+.PHONY : Menu_option.cpp.o
+
+Menu_option.i: Menu_option.cpp.i
+.PHONY : Menu_option.i
+
+# target to preprocess a source file
+Menu_option.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/Menu_option.cpp.i
+.PHONY : Menu_option.cpp.i
+
+Menu_option.s: Menu_option.cpp.s
+.PHONY : Menu_option.s
+
+# target to generate assembly for a file
+Menu_option.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/Menu_option.cpp.s
+.PHONY : Menu_option.cpp.s
+
+cell.o: cell.cpp.o
+.PHONY : cell.o
+
+# target to build an object file
+cell.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/cell.cpp.o
+.PHONY : cell.cpp.o
+
+cell.i: cell.cpp.i
+.PHONY : cell.i
+
+# target to preprocess a source file
+cell.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/cell.cpp.i
+.PHONY : cell.cpp.i
+
+cell.s: cell.cpp.s
+.PHONY : cell.s
+
+# target to generate assembly for a file
+cell.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/cell.cpp.s
+.PHONY : cell.cpp.s
+
+info_menu.o: info_menu.cpp.o
+.PHONY : info_menu.o
+
+# target to build an object file
+info_menu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/info_menu.cpp.o
+.PHONY : info_menu.cpp.o
+
+info_menu.i: info_menu.cpp.i
+.PHONY : info_menu.i
+
+# target to preprocess a source file
+info_menu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/info_menu.cpp.i
+.PHONY : info_menu.cpp.i
+
+info_menu.s: info_menu.cpp.s
+.PHONY : info_menu.s
+
+# target to generate assembly for a file
+info_menu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/info_menu.cpp.s
+.PHONY : info_menu.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -162,6 +258,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Grid_test"
+	@echo "... Grid.o"
+	@echo "... Grid.i"
+	@echo "... Grid.s"
+	@echo "... Menu_option.o"
+	@echo "... Menu_option.i"
+	@echo "... Menu_option.s"
+	@echo "... cell.o"
+	@echo "... cell.i"
+	@echo "... cell.s"
+	@echo "... info_menu.o"
+	@echo "... info_menu.i"
+	@echo "... info_menu.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
