@@ -582,3 +582,40 @@ events:
       Running the CXX compiler's linker: "/usr/bin/ld" "-v"
       GNU ld (GNU Binutils for Ubuntu) 2.38
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/291/bin/cmake/linux/x64/share/cmake-3.29/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/snap/clion/291/bin/cmake/linux/x64/share/cmake-3.29/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "/snap/clion/291/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "/snap/clion/291/bin/cmake/linux/x64/share/cmake-3.29/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "test/lib/googletest/cmake/internal_utils.cmake:55 (find_package)"
+      - "test/lib/googletest/CMakeLists.txt:71 (config_compiler_and_linker)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-jGY3B1"
+      binary: "/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-jGY3B1"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: '/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-jGY3B1'
+        
+        Run Build Command(s): /snap/clion/291/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_96487/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_96487.dir/build.make CMakeFiles/cmTC_96487.dir/build
+        gmake[1]: Entering directory '/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-jGY3B1'
+        Building C object CMakeFiles/cmTC_96487.dir/src.c.o
+        /usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD  -fdiagnostics-color=always -o CMakeFiles/cmTC_96487.dir/src.c.o -c /home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-jGY3B1/src.c
+        Linking C executable cmTC_96487
+        /snap/clion/291/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_96487.dir/link.txt --verbose=1
+        /usr/bin/cc -rdynamic CMakeFiles/cmTC_96487.dir/src.c.o -o cmTC_96487
+        gmake[1]: Leaving directory '/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-jGY3B1'
+        
+      exitCode: 0
+...

@@ -129,12 +129,64 @@ Grid_test/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/build
 .PHONY : Grid_test/fast
 
+#=============================================================================
+# Target rules for targets named core
+
+# Build rule for target.
+core: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 core
+.PHONY : core
+
+# fast build rule for target.
+core/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/build
+.PHONY : core/fast
+
+#=============================================================================
+# Target rules for targets named runGridTests
+
+# Build rule for target.
+runGridTests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 runGridTests
+.PHONY : runGridTests
+
+# fast build rule for target.
+runGridTests/fast:
+	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/runGridTests.dir/build.make test/CMakeFiles/runGridTests.dir/build
+.PHONY : runGridTests/fast
+
+#=============================================================================
+# Target rules for targets named gtest
+
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest
+.PHONY : gtest
+
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) $(MAKESILENT) -f test/lib/googletest/CMakeFiles/gtest.dir/build.make test/lib/googletest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
+
+#=============================================================================
+# Target rules for targets named gtest_main
+
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gtest_main
+.PHONY : gtest_main
+
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) $(MAKESILENT) -f test/lib/googletest/CMakeFiles/gtest_main.dir/build.make test/lib/googletest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
+
 Grid.o: Grid.cpp.o
 .PHONY : Grid.o
 
 # target to build an object file
 Grid.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/Grid.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/Grid.cpp.o
 .PHONY : Grid.cpp.o
 
 Grid.i: Grid.cpp.i
@@ -142,7 +194,7 @@ Grid.i: Grid.cpp.i
 
 # target to preprocess a source file
 Grid.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/Grid.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/Grid.cpp.i
 .PHONY : Grid.cpp.i
 
 Grid.s: Grid.cpp.s
@@ -150,7 +202,7 @@ Grid.s: Grid.cpp.s
 
 # target to generate assembly for a file
 Grid.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/Grid.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/Grid.cpp.s
 .PHONY : Grid.cpp.s
 
 Menu_option.o: Menu_option.cpp.o
@@ -158,7 +210,7 @@ Menu_option.o: Menu_option.cpp.o
 
 # target to build an object file
 Menu_option.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/Menu_option.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/Menu_option.cpp.o
 .PHONY : Menu_option.cpp.o
 
 Menu_option.i: Menu_option.cpp.i
@@ -166,7 +218,7 @@ Menu_option.i: Menu_option.cpp.i
 
 # target to preprocess a source file
 Menu_option.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/Menu_option.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/Menu_option.cpp.i
 .PHONY : Menu_option.cpp.i
 
 Menu_option.s: Menu_option.cpp.s
@@ -174,7 +226,7 @@ Menu_option.s: Menu_option.cpp.s
 
 # target to generate assembly for a file
 Menu_option.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/Menu_option.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/Menu_option.cpp.s
 .PHONY : Menu_option.cpp.s
 
 cell.o: cell.cpp.o
@@ -182,7 +234,7 @@ cell.o: cell.cpp.o
 
 # target to build an object file
 cell.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/cell.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/cell.cpp.o
 .PHONY : cell.cpp.o
 
 cell.i: cell.cpp.i
@@ -190,7 +242,7 @@ cell.i: cell.cpp.i
 
 # target to preprocess a source file
 cell.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/cell.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/cell.cpp.i
 .PHONY : cell.cpp.i
 
 cell.s: cell.cpp.s
@@ -198,7 +250,7 @@ cell.s: cell.cpp.s
 
 # target to generate assembly for a file
 cell.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/cell.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/cell.cpp.s
 .PHONY : cell.cpp.s
 
 info_menu.o: info_menu.cpp.o
@@ -206,7 +258,7 @@ info_menu.o: info_menu.cpp.o
 
 # target to build an object file
 info_menu.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/info_menu.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/info_menu.cpp.o
 .PHONY : info_menu.cpp.o
 
 info_menu.i: info_menu.cpp.i
@@ -214,7 +266,7 @@ info_menu.i: info_menu.cpp.i
 
 # target to preprocess a source file
 info_menu.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/info_menu.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/info_menu.cpp.i
 .PHONY : info_menu.cpp.i
 
 info_menu.s: info_menu.cpp.s
@@ -222,7 +274,7 @@ info_menu.s: info_menu.cpp.s
 
 # target to generate assembly for a file
 info_menu.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Grid_test.dir/build.make CMakeFiles/Grid_test.dir/info_menu.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/core.dir/build.make CMakeFiles/core.dir/info_menu.cpp.s
 .PHONY : info_menu.cpp.s
 
 main.o: main.cpp.o
@@ -258,6 +310,10 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Grid_test"
+	@echo "... core"
+	@echo "... gtest"
+	@echo "... gtest_main"
+	@echo "... runGridTests"
 	@echo "... Grid.o"
 	@echo "... Grid.i"
 	@echo "... Grid.s"

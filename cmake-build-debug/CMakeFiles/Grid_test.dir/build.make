@@ -83,83 +83,20 @@ CMakeFiles/Grid_test.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Grid_test.dir/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/edoardo/CLionProjects/Grid_project/main.cpp -o CMakeFiles/Grid_test.dir/main.cpp.s
 
-CMakeFiles/Grid_test.dir/cell.cpp.o: CMakeFiles/Grid_test.dir/flags.make
-CMakeFiles/Grid_test.dir/cell.cpp.o: /home/edoardo/CLionProjects/Grid_project/cell.cpp
-CMakeFiles/Grid_test.dir/cell.cpp.o: CMakeFiles/Grid_test.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Grid_test.dir/cell.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Grid_test.dir/cell.cpp.o -MF CMakeFiles/Grid_test.dir/cell.cpp.o.d -o CMakeFiles/Grid_test.dir/cell.cpp.o -c /home/edoardo/CLionProjects/Grid_project/cell.cpp
-
-CMakeFiles/Grid_test.dir/cell.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Grid_test.dir/cell.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/edoardo/CLionProjects/Grid_project/cell.cpp > CMakeFiles/Grid_test.dir/cell.cpp.i
-
-CMakeFiles/Grid_test.dir/cell.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Grid_test.dir/cell.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/edoardo/CLionProjects/Grid_project/cell.cpp -o CMakeFiles/Grid_test.dir/cell.cpp.s
-
-CMakeFiles/Grid_test.dir/Grid.cpp.o: CMakeFiles/Grid_test.dir/flags.make
-CMakeFiles/Grid_test.dir/Grid.cpp.o: /home/edoardo/CLionProjects/Grid_project/Grid.cpp
-CMakeFiles/Grid_test.dir/Grid.cpp.o: CMakeFiles/Grid_test.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Grid_test.dir/Grid.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Grid_test.dir/Grid.cpp.o -MF CMakeFiles/Grid_test.dir/Grid.cpp.o.d -o CMakeFiles/Grid_test.dir/Grid.cpp.o -c /home/edoardo/CLionProjects/Grid_project/Grid.cpp
-
-CMakeFiles/Grid_test.dir/Grid.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Grid_test.dir/Grid.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/edoardo/CLionProjects/Grid_project/Grid.cpp > CMakeFiles/Grid_test.dir/Grid.cpp.i
-
-CMakeFiles/Grid_test.dir/Grid.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Grid_test.dir/Grid.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/edoardo/CLionProjects/Grid_project/Grid.cpp -o CMakeFiles/Grid_test.dir/Grid.cpp.s
-
-CMakeFiles/Grid_test.dir/Menu_option.cpp.o: CMakeFiles/Grid_test.dir/flags.make
-CMakeFiles/Grid_test.dir/Menu_option.cpp.o: /home/edoardo/CLionProjects/Grid_project/Menu_option.cpp
-CMakeFiles/Grid_test.dir/Menu_option.cpp.o: CMakeFiles/Grid_test.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Grid_test.dir/Menu_option.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Grid_test.dir/Menu_option.cpp.o -MF CMakeFiles/Grid_test.dir/Menu_option.cpp.o.d -o CMakeFiles/Grid_test.dir/Menu_option.cpp.o -c /home/edoardo/CLionProjects/Grid_project/Menu_option.cpp
-
-CMakeFiles/Grid_test.dir/Menu_option.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Grid_test.dir/Menu_option.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/edoardo/CLionProjects/Grid_project/Menu_option.cpp > CMakeFiles/Grid_test.dir/Menu_option.cpp.i
-
-CMakeFiles/Grid_test.dir/Menu_option.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Grid_test.dir/Menu_option.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/edoardo/CLionProjects/Grid_project/Menu_option.cpp -o CMakeFiles/Grid_test.dir/Menu_option.cpp.s
-
-CMakeFiles/Grid_test.dir/info_menu.cpp.o: CMakeFiles/Grid_test.dir/flags.make
-CMakeFiles/Grid_test.dir/info_menu.cpp.o: /home/edoardo/CLionProjects/Grid_project/info_menu.cpp
-CMakeFiles/Grid_test.dir/info_menu.cpp.o: CMakeFiles/Grid_test.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Grid_test.dir/info_menu.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Grid_test.dir/info_menu.cpp.o -MF CMakeFiles/Grid_test.dir/info_menu.cpp.o.d -o CMakeFiles/Grid_test.dir/info_menu.cpp.o -c /home/edoardo/CLionProjects/Grid_project/info_menu.cpp
-
-CMakeFiles/Grid_test.dir/info_menu.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Grid_test.dir/info_menu.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/edoardo/CLionProjects/Grid_project/info_menu.cpp > CMakeFiles/Grid_test.dir/info_menu.cpp.i
-
-CMakeFiles/Grid_test.dir/info_menu.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Grid_test.dir/info_menu.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/edoardo/CLionProjects/Grid_project/info_menu.cpp -o CMakeFiles/Grid_test.dir/info_menu.cpp.s
-
 # Object files for target Grid_test
 Grid_test_OBJECTS = \
-"CMakeFiles/Grid_test.dir/main.cpp.o" \
-"CMakeFiles/Grid_test.dir/cell.cpp.o" \
-"CMakeFiles/Grid_test.dir/Grid.cpp.o" \
-"CMakeFiles/Grid_test.dir/Menu_option.cpp.o" \
-"CMakeFiles/Grid_test.dir/info_menu.cpp.o"
+"CMakeFiles/Grid_test.dir/main.cpp.o"
 
 # External object files for target Grid_test
 Grid_test_EXTERNAL_OBJECTS =
 
 Grid_test: CMakeFiles/Grid_test.dir/main.cpp.o
-Grid_test: CMakeFiles/Grid_test.dir/cell.cpp.o
-Grid_test: CMakeFiles/Grid_test.dir/Grid.cpp.o
-Grid_test: CMakeFiles/Grid_test.dir/Menu_option.cpp.o
-Grid_test: CMakeFiles/Grid_test.dir/info_menu.cpp.o
 Grid_test: CMakeFiles/Grid_test.dir/build.make
 Grid_test: /usr/lib/x86_64-linux-gnu/libcurses.so
 Grid_test: /usr/lib/x86_64-linux-gnu/libform.so
+Grid_test: libcore.a
 Grid_test: CMakeFiles/Grid_test.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable Grid_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Grid_test"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Grid_test.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
