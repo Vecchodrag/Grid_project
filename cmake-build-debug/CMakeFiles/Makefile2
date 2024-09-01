@@ -173,12 +173,12 @@ test/CMakeFiles/runGridTests.dir/all: test/lib/googletest/CMakeFiles/gtest_main.
 test/CMakeFiles/runGridTests.dir/all: CMakeFiles/core.dir/all
 	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/runGridTests.dir/build.make test/CMakeFiles/runGridTests.dir/depend
 	$(MAKE) $(MAKESILENT) -f test/CMakeFiles/runGridTests.dir/build.make test/CMakeFiles/runGridTests.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles --progress-num=12,13 "Built target runGridTests"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles --progress-num=12,13,14 "Built target runGridTests"
 .PHONY : test/CMakeFiles/runGridTests.dir/all
 
 # Build rule for subdir invocation for target.
 test/CMakeFiles/runGridTests.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles 11
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles 12
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test/CMakeFiles/runGridTests.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/edoardo/CLionProjects/Grid_project/cmake-build-debug/CMakeFiles 0
 .PHONY : test/CMakeFiles/runGridTests.dir/rule

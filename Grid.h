@@ -32,6 +32,18 @@ public:
 
     bool check_if_last_cell(int selected_position);
 
+    int get_current_position() const {
+        return current_position;
+    }
+    void set_current_position(int position) {
+            current_position = position;;
+    }
+    std::vector<Cell*>get_cells() const {
+        return cells;
+    }
+
+    void elaborate_input(char shield[50], int p);
+
 
 
 private:

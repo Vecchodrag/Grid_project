@@ -16,6 +16,6 @@ Call Stack (most recent call first):
   test/lib/googletest/CMakeLists.txt:69 (include)
 This warning is for project developers.  Use -Wno-dev to suppress it.
 
--- Configuring done (0.0s)
--- Generating done (0.0s)
+-- Configuring done (0.8s)
+-- Generating done (0.5s)
 -- Build files have been written to: /home/edoardo/CLionProjects/Grid_project/cmake-build-debug
