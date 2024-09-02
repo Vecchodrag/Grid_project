@@ -15,7 +15,7 @@
 
 
 
-class Cell: public observer,public subject{
+class Cell final : public observer,public subject{
 public:
     Cell(int X_pos,int Y_pos,int X_graphic_pos, int Y_graphic_pos,WINDOW* win, std::string cont,WINDOW* i): x_pos(X_pos),x_graphic_pos(X_graphic_pos),y_pos(Y_pos),y_graphic_pos(Y_graphic_pos),content(cont),window(win),highlighted(
 
@@ -189,6 +189,8 @@ public:
     [[nodiscard]] int y_pos1() const {
         return y_pos;
     }
+
+    ~Cell() override;
 
 private:
     int x_pos,y_pos,x_graphic_pos,y_graphic_pos;

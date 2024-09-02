@@ -303,10 +303,10 @@ void Grid::elaborate_input(char shield[50], int p) {
         getch();
         refresh();
     } else {
-        if (shield_content.length() > 8) {
+        if (shield_content.length() > 7) {
             info_menu_->clean();
             info_menu_->show_info(
-                "input is to long: max input length is 8 digits, press a key to continue:", 1);
+                "input is to long: max input length is 7 digits, press a key to continue:", 1);
             build_grid();
             getch();
         } else {
@@ -456,5 +456,11 @@ void Grid::chose_right(int selected_position,bool reachable) {
                 reachable = cells[selected_position]->is_reachable(current_position);
                    }
         }
+    }
+}
+
+Grid::~Grid() {
+    for(auto cell:cells) {
+        delete cell;
     }
 }

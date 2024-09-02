@@ -55,8 +55,7 @@ public:
     void chose_left(int selected_position,bool reachable);
     void chose_right(int selected_position,bool reachable);
 
-
-
+    ~Grid();
 
 private:
     std::vector<Cell*>cells;

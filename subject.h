@@ -8,6 +8,8 @@
 
 class subject{
 public:
+    virtual ~subject() = default;
+
     virtual void erase_last_observer()=0;
     virtual void insert_observer(observer* observer)=0;
     virtual void notify()=0;
@@ -16,6 +18,7 @@ public:
     virtual int get_subject_graphic_posY()=0;
     virtual int get_subject_graphic_posX()=0;
     virtual void erase_specific_observer(int obs_grid_pos)=0;
+
 
 
 };

@@ -7,6 +7,8 @@
 class subject;
 class observer{
 public:
+    virtual ~observer() = default;
+
     virtual void update()=0;
     virtual void erase_last_subject()=0;
     virtual void insert_subject(subject* subject)=0;

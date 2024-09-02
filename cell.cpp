@@ -64,7 +64,7 @@ void Cell::summatory() {
         sum+=atof(subject->get_subject_content().c_str());
     }
     std::string sum_string=std::to_string(sum);
-    if(sum>100000000){
+    if(sum>9999999||sum<(-9999999)){
         clean();
         mvwprintw(info_window,1,1,"the result is to big to display.");
         mvwprintw(info_window,2,1,"Press a key to continue: ");
@@ -197,6 +197,9 @@ bool Cell::is_reachable(int current_position) {
             reachable=false;
     }
     return reachable;
+}
+
+Cell::~Cell() {
 }
 
 
