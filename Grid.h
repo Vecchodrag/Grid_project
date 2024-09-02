@@ -10,7 +10,7 @@
 #include "vector"
 #include "cell.h"
 #include "ncurses.h"
-#include "memory"
+#include "memory.h"
 #include "Menu_option.h"
 #include "info_menu.h"
 
@@ -43,6 +43,18 @@ public:
     }
 
     void elaborate_input(char shield[50], int p);
+
+    void display_selected(attr_t selected_menu_item,int p,attr_t att_obserber);
+    void move_right();
+    void move_left();
+    void move_up();
+    void move_down();
+
+    void chose_up(int selected_position,bool reachable);
+    void chose_down(int selected_position,bool reachable);
+    void chose_left(int selected_position,bool reachable);
+    void chose_right(int selected_position,bool reachable);
+
 
 
 

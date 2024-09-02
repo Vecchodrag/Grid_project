@@ -17,6 +17,7 @@ public:
     virtual int get_subject_graphic_posX()=0;
     virtual void erase_specific_observer(int obs_grid_pos)=0;
 
+
 };
 #define GRID_TEST_SUBJECT_H
 

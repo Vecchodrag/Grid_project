@@ -15,9 +15,7 @@ void Cell::erase_all_subjects() {
 
 void Cell::erase_all_observers() {
 
-        for(auto observer:observers){
-            erase_last_observer();
-        }
+        observers.clear();
 
 }
 
@@ -150,22 +148,13 @@ int Cell::get_position() const {
     return position;
 }
 
-void Cell::erase_specific_observer(int obs_grid_pos) {
-    int observer_pos=0;
-    for(auto observer: observers){
-        if(observer->get_observer_position()==obs_grid_pos){
-            if(observer_pos==how_many_observers()-1){
-                observers.pop_back();
-                return;
-            }
-            for(int i=observer_pos;i<how_many_observers()-1;i++){
-                observers[observer_pos]=observers[observer_pos+1];
-            }
-            observers.pop_back();
+void Cell::erase_specific_observer(const int obs_grid_pos) {
 
-        }
-        observer_pos++;
+    for(auto itr=observers.begin();itr<observers.end();itr++){
+        if((*itr)->get_observer_position()==obs_grid_pos){
 
+            observers.erase(itr,itr+1);
+            }
     }
 }
 

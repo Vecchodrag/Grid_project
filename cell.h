@@ -3,9 +3,7 @@
 //
 
 
-
-
-
+#include <memory>
 #ifndef GRID_TEST_CELL_H
 
 #include "string"
@@ -13,6 +11,7 @@
 #include "observer.h"
 #include "subject.h"
 #include "vector"
+#include "memory.h"
 
 
 

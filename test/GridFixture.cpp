@@ -41,11 +41,35 @@ TEST_F(GridSuite,Test_move) {
 
     g->elaborate_input(s,129);
     ASSERT_EQ(stoi(g->get_cells()[129]->getContent()),50);
+    //g->move(10,A_REVERSE); this requires to a further input by the user
+}
+TEST_F(GridSuite,Test_chose) {
+    g->chose(KEY_LEFT,A_REVERSE,0);
+    ASSERT_EQ(g->get_current_position(),0);
+    g->chose(KEY_RIGHT,A_REVERSE,0);
+    ASSERT_EQ(g->get_current_position(),1);
+    g->chose(KEY_LEFT,A_REVERSE,0);
+    ASSERT_EQ(g->get_current_position(),1);
+    g->chose(10,A_REVERSE,0);
 
+    g->chose(101,A_REVERSE,0);
+    g->chose(KEY_LEFT,A_REVERSE,1);
 
+    ASSERT_EQ(g->get_current_position(),2);
 
+    g->chose(KEY_LEFT,A_REVERSE,1);
+    ASSERT_EQ(g->get_current_position(),2);
+    g->chose(KEY_RIGHT,A_REVERSE,1);
+    ASSERT_EQ(g->get_current_position(),3);
 
-
+    g->chose(KEY_RIGHT,A_REVERSE,3);
+    g->chose(10,A_REVERSE,3);
+    g->chose(10,A_REVERSE,3);
+    g->chose(10,A_REVERSE,3);
+    g->chose(120,A_REVERSE,3);
+    g->chose(101,A_REVERSE,3);
+    ASSERT_EQ(g->get_current_position(),7);
+    ASSERT_EQ(g->get_cells()[3]->how_many_subjects(),2);
 
 
 }

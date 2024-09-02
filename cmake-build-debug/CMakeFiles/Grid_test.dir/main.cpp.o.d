@@ -154,8 +154,6 @@ CMakeFiles/Grid_test.dir/main.cpp.o: \
  /usr/include/c++/11/bits/stl_bvector.h \
  /usr/include/c++/11/bits/vector.tcc \
  /home/edoardo/CLionProjects/Grid_project/cell.h \
- /home/edoardo/CLionProjects/Grid_project/observer.h \
- /home/edoardo/CLionProjects/Grid_project/subject.h \
  /usr/include/c++/11/memory /usr/include/c++/11/bits/stl_tempbuf.h \
  /usr/include/c++/11/bits/stl_raw_storage_iter.h \
  /usr/include/c++/11/bits/align.h /usr/include/c++/11/bit \
@@ -175,5 +173,7 @@ CMakeFiles/Grid_test.dir/main.cpp.o: \
  /usr/include/c++/11/backward/auto_ptr.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
+ /home/edoardo/CLionProjects/Grid_project/observer.h \
+ /home/edoardo/CLionProjects/Grid_project/subject.h /usr/include/memory.h \
  /home/edoardo/CLionProjects/Grid_project/Menu_option.h \
  /home/edoardo/CLionProjects/Grid_project/info_menu.h

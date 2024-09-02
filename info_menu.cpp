@@ -2,6 +2,7 @@
 // Created by edoardo on 30/08/24.
 //
 #include "info_menu.h"
+#include "memory.h"
 
 info_menu::info_menu(WINDOW *i) {
     info_window=i;
@@ -35,7 +36,7 @@ void info_menu::clean() {
         mvwprintw(info_window,i,1,"                                      ");
 }
 
-void info_menu::display_cell_info(Cell *cell) {
+void info_menu::display_cell_info(Cell* cell) {
     init_pair(5,COLOR_RED,COLOR_BLACK);
     init_pair(6,COLOR_BLUE,COLOR_BLACK);
     clean();

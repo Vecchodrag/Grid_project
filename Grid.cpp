@@ -16,7 +16,7 @@ Grid::Grid(WINDOW *win): window(win), current_position(0) {
     for (int i = 1; i < (Ymax / 2) - 1; i += 2) {
         int Xpos = 1;
         for (int j = 1; j < (Xmax / 2) - 2; j += 10) {
-            Cell *cell = new Cell(Xpos, Ypos, j, i, win, std::to_string(0), info_window);
+            Cell* cell =new Cell(Xpos, Ypos, j, i, win, std::to_string(0), info_window);
             for (int k = cell->getContent().length(); k < 9; k++)
                 cell->setContent(cell->getContent() + ' ');
             cells.push_back(cell);
@@ -91,34 +91,22 @@ void Grid::move(int trigger, attr_t attribute) {
     display(attribute);
     switch (trigger) {
         case KEY_RIGHT:
-            if (current_position < num_columns * num_rows - 1) {
-                cells[current_position]->setHighlighted(false);
-                current_position++;
-            }
+            move_right();
             break;
 
 
         case KEY_LEFT:
-            if (current_position > 0) {
-                cells[current_position]->setHighlighted(false);
-                current_position--;
-            }
+            move_left();
             break;
 
 
         case KEY_UP:
-            if (current_position - num_columns > -1) {
-                cells[current_position]->setHighlighted(false);
-                current_position -= num_columns;
-            }
+            move_up();
             break;
 
 
         case KEY_DOWN:
-            if (current_position + num_columns < num_columns * num_rows) {
-                cells[current_position]->setHighlighted(false);
-                current_position += num_columns;
-            }
+            move_down();
             break;
 
         case 10:
@@ -136,48 +124,27 @@ void Grid::move(int trigger, attr_t attribute) {
                         c = KEY_RIGHT;
                     else
                         c = KEY_LEFT;
-                    int x_cell_selected = cells[current_position]->getXGraphicPos(), y_cell_selected = cells[
-                        current_position]->getYGraphicPos(), p = current_position;
+                    int p = current_position;
                     std::string selected_cell_content = cells[current_position]->getContent();
 
                     if (cells[p]->getCurrentOperation() == 4) {
                         char shield[50];
-
                         display(input_attr);
-
-
                         keypad(window, false);
                         echo();
                         curs_set(1);
                         mvwgetstr(window, cells[p]->getYGraphicPos(), cells[p]->getXGraphicPos(), shield);
-                        elaborate_input(shield,p);
+                        elaborate_input(shield, p);
                     } else {
                         do {
                             chose(c, menu, p);
-
-
-                            for (auto cell: cells) {
-                                if (cell->isSelected()) {
-                                    wattron(window, selected_menu_item);
-                                    mvwprintw(window, cell->getYGraphicPos(), cell->getXGraphicPos(),
-                                              cell->getContent().c_str());
-                                    wattroff(window, selected_menu_item);
-                                }
-                            }
-
-                            wrefresh(window);
-                            wattron(window, grid);
-                            mvwprintw(window, y_cell_selected, x_cell_selected, selected_cell_content.c_str());
-                            wattroff(window, grid);
-                            cells[p]->display_observers(att_obserber);
+                            display_selected(selected_menu_item, p, att_obserber);
                         } while (!((c = wgetch(window)) == 'x' && cells[p]->how_many_subjects() <= 0) && c != 'e' && !(
                                      check_if_last_cell(p) && c != 'x'));
                         if (c == 'e' || (check_if_last_cell(p) && c != 'x'))
                             chose('e', menu, p);
                     }
-                    for (auto cell: cells) {
-                        cell->setSelected(false);
-                    }
+
 
                     cells[current_position]->setHighlighted(false);
                     current_position = p;
@@ -237,99 +204,21 @@ void Grid::chose(int trigger, attr_t attr, int selected_position) {
 
     switch (trigger) {
         case KEY_RIGHT:
-            if (current_position < num_columns * num_rows - 1) {
-                cells[current_position]->setHighlighted(false);
-                current_position++;
-                reachable = cells[selected_position]->is_reachable(current_position);
-                while ((current_position == selected_position || cells[current_position]->isSelected() || !reachable) &&
-                       current_position < num_columns * num_rows - 1) {
-                    cells[current_position]->setHighlighted(false);
-                    current_position++;
-                    reachable = cells[selected_position]->is_reachable(current_position);
-                }
-                if (current_position >= num_columns * num_rows - 1) {
-                    while (cells[current_position]->isSelected() || current_position == selected_position || !
-                           reachable) {
-                        cells[current_position]->setHighlighted(false);
-                        current_position--;
-                        reachable = cells[selected_position]->is_reachable(current_position);
-                    }
-                }
-            }
+            chose_right(selected_position,reachable);
             break;
-
 
         case KEY_LEFT:
-
-            if (current_position > 0) {
-                cells[current_position]->setHighlighted(false);
-                current_position--;
-                reachable = cells[selected_position]->is_reachable(current_position);
-                while ((current_position == selected_position || cells[current_position]->isSelected() || !reachable) &&
-                       current_position > 0) {
-                    cells[current_position]->setHighlighted(false);
-                    current_position--;
-                    reachable = cells[selected_position]->is_reachable(current_position);
-                }
-
-
-                if (current_position <= 0) {
-                    while (cells[current_position]->isSelected() || current_position == selected_position || !
-                           reachable) {
-                        cells[current_position]->setHighlighted(false);
-                        current_position++;
-                        reachable = cells[selected_position]->is_reachable(current_position);
-                    }
-                }
-            }
-
+            chose_left(selected_position,reachable);
             break;
-
 
         case KEY_UP:
-            if (current_position - num_columns > -1) {
-                cells[current_position]->setHighlighted(false);
-                current_position -= num_columns;
-                reachable = cells[selected_position]->is_reachable(current_position);
-                while ((current_position == selected_position || cells[current_position]->isSelected() || !reachable) &&
-                       current_position - num_columns > -1) {
-                    cells[current_position]->setHighlighted(false);
-                    current_position -= num_columns;
-                    reachable = cells[selected_position]->is_reachable(current_position);
-                }
-                if (current_position - num_columns <= 0) {
-                    while (cells[current_position]->isSelected() || current_position == selected_position || !
-                           reachable) {
-                        cells[current_position]->setHighlighted(false);
-                        current_position += num_columns;
-                        reachable = cells[selected_position]->is_reachable(current_position);
-                    }
-                }
-            }
+            chose_up(selected_position,reachable);
             break;
-
 
         case KEY_DOWN:
-            if (current_position + num_columns < num_columns * num_rows) {
-                cells[current_position]->setHighlighted(false);
-                current_position += num_columns;
-                reachable = cells[selected_position]->is_reachable(current_position);
-                while ((current_position == selected_position || cells[current_position]->isSelected() || !reachable) &&
-                       current_position + num_columns < num_columns * num_rows) {
-                    cells[current_position]->setHighlighted(false);
-                    current_position += num_columns;
-                    reachable = cells[selected_position]->is_reachable(current_position);
-                }
-                if (current_position + num_columns >= num_columns * num_rows) {
-                    while (cells[current_position]->isSelected() || current_position == selected_position || !
-                           reachable) {
-                        cells[current_position]->setHighlighted(false);
-                        current_position -= num_columns;
-                        reachable = cells[selected_position]->is_reachable(current_position);
-                    }
-                }
-            }
+            chose_down(selected_position,reachable);
             break;
+
         case 10:
 
             cells[selected_position]->insert_subject(cells[current_position]);
@@ -437,3 +326,135 @@ void Grid::elaborate_input(char shield[50], int p) {
     }
 }
 
+void Grid::display_selected(attr_t selected_menu_item, int p, attr_t att_obserber) {
+    for (auto itr=cells.begin();itr!=cells.end();itr++) {
+        if ((*itr)->isSelected()) {
+            wattron(window, selected_menu_item);
+            mvwprintw(window, (*itr)->getYGraphicPos(), (*itr)->getXGraphicPos(),
+                      (*itr)->getContent().c_str());
+            wattroff(window, selected_menu_item);
+        }
+    }
+    wrefresh(window);
+    wattron(window, A_REVERSE);
+    mvwprintw(window, cells[p]->getYGraphicPos(), cells[p]->getXGraphicPos(), cells[p]->getContent().c_str());
+    wattroff(window, A_REVERSE);
+    cells[p]->display_observers(att_obserber);
+}
+
+void Grid::move_right() {
+    if (current_position < num_columns * num_rows - 1) {
+        cells[current_position]->setHighlighted(false);
+        current_position++;
+    }
+
+}
+
+void Grid::move_left() {
+    if (current_position > 0) {
+        cells[current_position]->setHighlighted(false);
+        current_position--;
+    }
+}
+
+void Grid::move_up() {
+    if (current_position - num_columns > -1) {
+        cells[current_position]->setHighlighted(false);
+        current_position -= num_columns;
+    }
+}
+
+void Grid::move_down() {
+    if (current_position + num_columns < num_columns * num_rows) {
+        cells[current_position]->setHighlighted(false);
+        current_position += num_columns;
+    }
+}
+
+void Grid::chose_up(int selected_position,bool reachable) {
+    if (current_position - num_columns > -1) {
+        cells[current_position]->setHighlighted(false);
+        current_position -= num_columns;
+        reachable = cells[selected_position]->is_reachable(current_position);
+        while ((current_position == selected_position || cells[current_position]->isSelected() || !reachable) &&
+               current_position - num_columns > -1) {
+            cells[current_position]->setHighlighted(false);
+            current_position -= num_columns;
+            reachable = cells[selected_position]->is_reachable(current_position);
+               }
+        if (current_position - num_columns <= 0) {
+            while (cells[current_position]->isSelected() || current_position == selected_position || !
+                   reachable) {
+                cells[current_position]->setHighlighted(false);
+                current_position += num_columns;
+                reachable = cells[selected_position]->is_reachable(current_position);
+                   }
+        }
+    }
+}
+
+void Grid::chose_down(int selected_position,bool reachable) {
+    if (current_position + num_columns < num_columns * num_rows) {
+        cells[current_position]->setHighlighted(false);
+        current_position += num_columns;
+        reachable = cells[selected_position]->is_reachable(current_position);
+        while ((current_position == selected_position || cells[current_position]->isSelected() || !reachable) &&
+               current_position + num_columns < num_columns * num_rows) {
+            cells[current_position]->setHighlighted(false);
+            current_position += num_columns;
+            reachable = cells[selected_position]->is_reachable(current_position);
+               }
+        if (current_position + num_columns >= num_columns * num_rows) {
+            while (cells[current_position]->isSelected() || current_position == selected_position || !
+                   reachable) {
+                cells[current_position]->setHighlighted(false);
+                current_position -= num_columns;
+                reachable = cells[selected_position]->is_reachable(current_position);
+                   }
+        }
+    }
+}
+
+void Grid::chose_left(int selected_position,bool reachable) {
+    if (current_position > 0) {
+        cells[current_position]->setHighlighted(false);
+        current_position--;
+        reachable = cells[selected_position]->is_reachable(current_position);
+        while ((current_position == selected_position || cells[current_position]->isSelected() || !reachable) &&
+               current_position > 0) {
+            cells[current_position]->setHighlighted(false);
+            current_position--;
+            reachable = cells[selected_position]->is_reachable(current_position);
+               }
+        if (current_position <= 0) {
+            while (cells[current_position]->isSelected() || current_position == selected_position || !
+                   reachable) {
+                cells[current_position]->setHighlighted(false);
+                current_position++;
+                reachable = cells[selected_position]->is_reachable(current_position);
+                   }
+        }
+    }
+}
+
+void Grid::chose_right(int selected_position,bool reachable) {
+    if (current_position < num_columns * num_rows - 1) {
+        cells[current_position]->setHighlighted(false);
+        current_position++;
+        reachable = cells[selected_position]->is_reachable(current_position);
+        while ((current_position == selected_position || cells[current_position]->isSelected() || !reachable) &&
+               current_position < num_columns * num_rows - 1) {
+            cells[current_position]->setHighlighted(false);
+            current_position++;
+            reachable = cells[selected_position]->is_reachable(current_position);
+               }
+        if (current_position >= num_columns * num_rows - 1) {
+            while (cells[current_position]->isSelected() || current_position == selected_position || !
+                   reachable) {
+                cells[current_position]->setHighlighted(false);
+                current_position--;
+                reachable = cells[selected_position]->is_reachable(current_position);
+                   }
+        }
+    }
+}
