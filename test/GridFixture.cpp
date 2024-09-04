@@ -41,7 +41,7 @@ TEST_F(GridSuite,Test_move) {
 
     g->elaborate_input(s,129);
     ASSERT_EQ(stoi(g->get_cells()[129]->getContent()),50);
-    //g->move(10,A_REVERSE); this requires to a further input by the user
+    //g->move(10,A_REVERSE); this requires a further input from the user
 }
 TEST_F(GridSuite,Test_chose) {
     g->chose(KEY_LEFT,A_REVERSE,0);
@@ -70,6 +70,46 @@ TEST_F(GridSuite,Test_chose) {
     g->chose(101,A_REVERSE,3);
     ASSERT_EQ(g->get_current_position(),7);
     ASSERT_EQ(g->get_cells()[3]->how_many_subjects(),2);
+
+
+}
+TEST_F(GridSuite,Test_check_if_last_cell) {
+    ASSERT_FALSE(g->check_if_last_cell(0));
+    for(int i=1;i<130;i++) {
+        g->get_cells()[i]->setSelected(true);
+    }
+    ASSERT_TRUE(g->check_if_last_cell(0));
+}
+
+TEST_F(GridSuite,Test_elaborate_input) {
+    char shield[50]="56";
+    g->elaborate_input(shield,0);
+    ASSERT_EQ(stof(g->get_cells()[0]->getContent()),56);
+    for(int i=0;i<9;i++)
+        shield[i]='9';
+    g->elaborate_input(shield,0);
+    ASSERT_EQ(stof(g->get_cells()[0]->getContent()),56);
+    char test[50]="9999999";
+
+    g->elaborate_input(test,0);
+    ASSERT_EQ(stof(g->get_cells()[0]->getContent()),9999999);
+
+    char words[50]="dfgh";
+    g->elaborate_input(words,0);
+    ASSERT_EQ(stof(g->get_cells()[0]->getContent()),9999999);
+
+    char points[50]="7.8.6";
+    g->elaborate_input(points,0);
+    ASSERT_EQ(stof(g->get_cells()[0]->getContent()),9999999);
+
+    char minus[50]="-8-9-7";
+    g->elaborate_input(minus,0);
+    ASSERT_EQ(stof(g->get_cells()[0]->getContent()),9999999);
+
+    char correct_n[50]="-8.98";
+    g->elaborate_input(correct_n,0);
+    ASSERT_EQ(g->get_cells()[0]->getContent(),"-8.98    ");
+
 
 
 }
