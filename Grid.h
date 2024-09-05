@@ -50,10 +50,10 @@ public:
     void move_up();
     void move_down();
 
-    void chose_up(int selected_position,bool reachable);
-    void chose_down(int selected_position,bool reachable);
-    void chose_left(int selected_position,bool reachable);
-    void chose_right(int selected_position,bool reachable);
+    void chose_up(int selected_position);
+    void chose_down(int selected_position);
+    void chose_left(int selected_position);
+    void chose_right(int selected_position);
 
     ~Grid();
 

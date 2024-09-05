@@ -113,3 +113,93 @@ TEST_F(GridSuite,Test_elaborate_input) {
 
 
 }
+
+TEST_F(GridSuite,Test_move_right){
+    g->move_right();
+    ASSERT_EQ(g->get_current_position(),1);
+    g->set_current_position(129);
+    g->move_right();
+    ASSERT_EQ(g->get_current_position(),129);
+
+}
+
+
+
+TEST_F(GridSuite,Test_move_left){
+    g->move_left();
+    ASSERT_EQ(g->get_current_position(),0);
+    g->set_current_position(129);
+    g->move_left();
+    ASSERT_EQ(g->get_current_position(),128);
+
+}
+TEST_F(GridSuite,Test_move_up){
+    g->move_up();
+    ASSERT_EQ(g->get_current_position(),0);
+    g->set_current_position(129);
+    g->move_up();
+    ASSERT_EQ(g->get_current_position(),119);
+
+}
+TEST_F(GridSuite,Test_move_down){
+    g->move_down();
+    ASSERT_EQ(g->get_current_position(),10);
+    g->set_current_position(129);
+    g->move_down();
+    ASSERT_EQ(g->get_current_position(),129);
+
+}
+TEST_F(GridSuite,Test_chose_right){
+    g->chose_right(1);
+    ASSERT_EQ(g->get_current_position(),2);
+    g->get_cells()[g->get_current_position()]->insert_observer(g->get_cells()[3]);
+    g->chose_right(2);
+    ASSERT_EQ(g->get_current_position(),4);
+    g->get_cells()[5]->setSelected(true);
+    g->chose_right(4);
+    ASSERT_EQ(g->get_current_position(),6);
+}
+
+TEST_F(GridSuite,Test_chose_left){
+    g->chose_left(1);
+    ASSERT_EQ(g->get_current_position(),0);
+    g->set_current_position(4);
+    g->get_cells()[g->get_current_position()]->insert_observer(g->get_cells()[3]);
+    g->chose_left(4);
+    ASSERT_EQ(g->get_current_position(),2);
+    g->get_cells()[1]->setSelected(true);
+    g->chose_left(4);
+    ASSERT_EQ(g->get_current_position(),0);
+}
+
+TEST_F(GridSuite,Test_chose_up){
+    g->chose_up(1);
+    ASSERT_EQ(g->get_current_position(),0);
+    g->set_current_position(50);
+    g->get_cells()[g->get_current_position()]->insert_observer(g->get_cells()[40]);
+    g->chose_up(50);
+    ASSERT_EQ(g->get_current_position(),30);
+    g->get_cells()[20]->setSelected(true);
+    g->chose_up(30);
+    ASSERT_EQ(g->get_current_position(),10);
+}
+
+TEST_F(GridSuite,Test_chose_down){
+    g->chose_down(0);
+    ASSERT_EQ(g->get_current_position(),10);
+
+    g->get_cells()[g->get_current_position()]->insert_observer(g->get_cells()[20]);
+    g->chose_down(10);
+    ASSERT_EQ(g->get_current_position(),30);
+    g->get_cells()[40]->setSelected(true);
+    g->chose_down(30);
+    ASSERT_EQ(g->get_current_position(),50);
+}
+
+
+
+
+
+
+
+

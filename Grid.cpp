@@ -196,7 +196,7 @@ void Grid::chose(int trigger, attr_t attr, int selected_position) {
     attr_t grid = COLOR_PAIR(2) | A_REVERSE;
 
     int last;
-    bool reachable;
+
     info_menu_->show_info(
         "Use arrow keys to move in the grid.   When you want to select a cell, press enter.                                If you want to exit or go back, press x. To get the result of the selected  operation, press e. You cannot select observer cells as a subject.",
         14);
@@ -204,19 +204,19 @@ void Grid::chose(int trigger, attr_t attr, int selected_position) {
 
     switch (trigger) {
         case KEY_RIGHT:
-            chose_right(selected_position,reachable);
+            chose_right(selected_position);
             break;
 
         case KEY_LEFT:
-            chose_left(selected_position,reachable);
+            chose_left(selected_position);
             break;
 
         case KEY_UP:
-            chose_up(selected_position,reachable);
+            chose_up(selected_position);
             break;
 
         case KEY_DOWN:
-            chose_down(selected_position,reachable);
+            chose_down(selected_position);
             break;
 
         case 10:
@@ -371,11 +371,11 @@ void Grid::move_down() {
     }
 }
 
-void Grid::chose_up(int selected_position,bool reachable) {
+void Grid::chose_up(int selected_position) {
     if (current_position - num_columns > -1) {
         cells[current_position]->setHighlighted(false);
         current_position -= num_columns;
-        reachable = cells[selected_position]->is_reachable(current_position);
+        bool reachable = cells[selected_position]->is_reachable(current_position);
         while ((current_position == selected_position || cells[current_position]->isSelected() || !reachable) &&
                current_position - num_columns > -1) {
             cells[current_position]->setHighlighted(false);
@@ -393,11 +393,11 @@ void Grid::chose_up(int selected_position,bool reachable) {
     }
 }
 
-void Grid::chose_down(int selected_position,bool reachable) {
+void Grid::chose_down(int selected_position) {
     if (current_position + num_columns < num_columns * num_rows) {
         cells[current_position]->setHighlighted(false);
         current_position += num_columns;
-        reachable = cells[selected_position]->is_reachable(current_position);
+        bool reachable = cells[selected_position]->is_reachable(current_position);
         while ((current_position == selected_position || cells[current_position]->isSelected() || !reachable) &&
                current_position + num_columns < num_columns * num_rows) {
             cells[current_position]->setHighlighted(false);
@@ -415,11 +415,11 @@ void Grid::chose_down(int selected_position,bool reachable) {
     }
 }
 
-void Grid::chose_left(int selected_position,bool reachable) {
+void Grid::chose_left(int selected_position) {
     if (current_position > 0) {
         cells[current_position]->setHighlighted(false);
         current_position--;
-        reachable = cells[selected_position]->is_reachable(current_position);
+        bool reachable = cells[selected_position]->is_reachable(current_position);
         while ((current_position == selected_position || cells[current_position]->isSelected() || !reachable) &&
                current_position > 0) {
             cells[current_position]->setHighlighted(false);
@@ -437,11 +437,11 @@ void Grid::chose_left(int selected_position,bool reachable) {
     }
 }
 
-void Grid::chose_right(int selected_position,bool reachable) {
+void Grid::chose_right(int selected_position) {
     if (current_position < num_columns * num_rows - 1) {
         cells[current_position]->setHighlighted(false);
         current_position++;
-        reachable = cells[selected_position]->is_reachable(current_position);
+        bool reachable = cells[selected_position]->is_reachable(current_position);
         while ((current_position == selected_position || cells[current_position]->isSelected() || !reachable) &&
                current_position < num_columns * num_rows - 1) {
             cells[current_position]->setHighlighted(false);
