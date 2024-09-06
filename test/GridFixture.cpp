@@ -17,6 +17,20 @@ protected:
 
 
 };
+
+TEST_F(GridSuite,constructor){
+    int n_cells=0;
+    for(auto cell:g->get_cells()){
+        if(cell->getContent()=="0        ")
+            n_cells++;
+
+
+    }
+    ASSERT_EQ(n_cells,130);
+
+}
+
+
 TEST_F(GridSuite,Test_move) {
     g->move(KEY_RIGHT,A_REVERSE);
     ASSERT_EQ(g->get_current_position(),1);

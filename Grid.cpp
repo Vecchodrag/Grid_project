@@ -310,7 +310,7 @@ void Grid::elaborate_input(char shield[50], int p) {
             build_grid();
             getch();
         } else {
-            if (shield_content.length() == 0)
+            if (shield_content.empty())
                 shield_content = '0';
 
 

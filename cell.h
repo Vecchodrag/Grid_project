@@ -21,16 +21,16 @@ public:
 
             false),selected(false),current_operation(4),info_window((i)){}
 
-    int getYGraphicPos() const {
+    [[nodiscard]] int getYGraphicPos() const {
         return y_graphic_pos;
     }
 
-    int getXGraphicPos() const {
+    [[nodiscard]] int getXGraphicPos() const {
         return x_graphic_pos;
     }
 
 
-    const std::string &getContent() const {
+    [[nodiscard]] const std::string &getContent() const {
         return content;
     }
 
@@ -38,13 +38,13 @@ public:
         Cell::content = c;
     }
 
-    int getXPos() const;
+    [[nodiscard]] int getXPos() const;
 
-    bool isHighlighted() const {
+    [[nodiscard]] bool isHighlighted() const {
         return highlighted;
     }
 
-    const std::vector<subject *> &getSubjects() const;
+    [[nodiscard]] const std::vector<subject *> &getSubjects() const;
 
     void setHighlighted(bool h) {
         Cell::highlighted = h;
@@ -69,7 +69,7 @@ public:
 
     void notify() override;
 
-    bool isSelected() const {
+    [[nodiscard]] bool isSelected() const {
         return selected;
     }
 
@@ -92,7 +92,7 @@ public:
 
 
 
-    void summatory();
+    void summation();
 
 
 
@@ -117,7 +117,7 @@ public:
 
 
 
-    int getCurrentOperation() const {
+    [[nodiscard]] int getCurrentOperation() const {
         return current_operation;
     }
 
@@ -140,7 +140,7 @@ public:
         return subjects[how_many_subjects()-1]->get_subject_position();
     }
 
-    int get_position () const;
+    [[nodiscard]] int get_position () const;
 
 
 
@@ -192,9 +192,9 @@ public:
 
     ~Cell() override;
 
-    int getYPos() const;
+    [[nodiscard]] int getYPos() const;
 
-    const std::vector<observer *> &getObservers() const;
+    [[nodiscard]] const std::vector<observer *> &getObservers() const;
 
 private:
     int x_pos,y_pos,x_graphic_pos,y_graphic_pos;

@@ -32,7 +32,7 @@ public:
     }
 
 private:
-    std::string options[5]={"max","min","mean","sum","insert_num"};
+    std::string options[5]={"Maximus","Minimum","Mean","Summation","Insert number"};
     WINDOW * menu_window;
     int pos;
 

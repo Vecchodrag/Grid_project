@@ -15,7 +15,7 @@ public:
 
 
 
-    void show_info(std::string info, int y);
+    void show_info(const std::string& info, int y);
 
 
 

@@ -70,12 +70,12 @@ TEST_F(CellSuite, test_update){
 }
 
 TEST_F(CellSuite,test_summatory){
-    c->summatory();
+    c->summation();
     ASSERT_EQ(c->getContent(),"2.000000 ");
     Cell* h=new Cell(4,4,2,2,w,"9999999",i);
     c->insert_subject(h);
     h->insert_observer(c);
-    c->summatory();
+    c->summation();
     ASSERT_EQ(c->getContent(),"0.000000 ");
     ASSERT_EQ(c->getCurrentOperation(),4);
 

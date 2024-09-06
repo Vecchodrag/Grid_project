@@ -35,7 +35,7 @@ void Cell::update() {
             this->mean();
         break;
         case 3:
-            this->summatory();
+            this->summation();
 
         break;
 
@@ -49,7 +49,7 @@ void Cell::update() {
 
 
 
-void Cell::summatory() {
+void Cell::summation() {
     float sum=0;
     for(auto subject: subjects){
         sum+=atof(subject->get_subject_content().c_str());

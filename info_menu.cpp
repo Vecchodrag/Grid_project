@@ -13,7 +13,7 @@ info_menu::info_menu(WINDOW *i) {
     refresh();
 }
 
-void info_menu::show_info(std::string info, int y) {
+void info_menu::show_info(const std::string& info, int y) {
     int i=0,k=y;
     std::string sub_info;
     while(i<info.size()) {
@@ -54,7 +54,7 @@ void info_menu::display_cell_info(Cell* cell) {
             mvwprintw(info_window,3,1," operation = mean");
         break;
         case 3:
-            mvwprintw(info_window,3,1," operation = summatory");
+            mvwprintw(info_window,3,1," operation = summation");
         break;
         case 4:
             mvwprintw(info_window,3,1," operation = insert number");
