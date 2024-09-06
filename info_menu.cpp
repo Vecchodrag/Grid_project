@@ -75,3 +75,7 @@ void info_menu::display_cell_info(Cell* cell) {
     wrefresh(info_window);
 
 }
+
+WINDOW *info_menu::getInfoWindow() const {
+    return info_window;
+}

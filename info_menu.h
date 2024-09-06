@@ -26,6 +26,7 @@ public:
 
     void display_cell_info(Cell* cell);
 
+    WINDOW *getInfoWindow() const;
 
 
 private:
