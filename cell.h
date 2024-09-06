@@ -66,7 +66,7 @@ public:
 
     void erase_all_subjects();
 
-    void erase_all_observers();
+
     void notify() override;
 
     bool isSelected() const {
@@ -89,9 +89,6 @@ public:
     int get_observer_position()override{
         return get_position();
     }
-
-    void list_subjects_contents();
-
 
 
 

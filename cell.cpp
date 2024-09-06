@@ -13,11 +13,7 @@ void Cell::erase_all_subjects() {
 
 }
 
-void Cell::erase_all_observers() {
 
-        observers.clear();
-
-}
 
 void Cell::notify() {
 
@@ -51,12 +47,7 @@ void Cell::update() {
 
 }
 
-void Cell::list_subjects_contents() {
-    for(auto subject: subjects) {
-        printw(subject->get_subject_content().c_str());
-        refresh();
-    }
-}
+
 
 void Cell::summatory() {
     float sum=0;
