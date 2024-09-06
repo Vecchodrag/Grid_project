@@ -38,10 +38,13 @@ public:
         Cell::content = c;
     }
 
+    int getXPos() const;
 
     bool isHighlighted() const {
         return highlighted;
     }
+
+    const std::vector<subject *> &getSubjects() const;
 
     void setHighlighted(bool h) {
         Cell::highlighted = h;
@@ -191,6 +194,10 @@ public:
     }
 
     ~Cell() override;
+
+    int getYPos() const;
+
+    const std::vector<observer *> &getObservers() const;
 
 private:
     int x_pos,y_pos,x_graphic_pos,y_graphic_pos;

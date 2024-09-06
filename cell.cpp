@@ -203,7 +203,20 @@ Cell::~Cell() {
 }
 
 
+int Cell::getXPos() const {
+    return x_pos;
+}
 
 
+int Cell::getYPos() const {
+    return y_pos;
+}
+
+const std::vector<subject *> &Cell::getSubjects() const {
+    return subjects;
+}
 
 
+const std::vector<observer *> &Cell::getObservers() const {
+    return observers;
+}
