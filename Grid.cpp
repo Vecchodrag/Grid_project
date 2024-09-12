@@ -3,6 +3,8 @@
 //
 #include "Grid.h"
 
+#include <memory>
+
 Grid::Grid(WINDOW *win): window(win), current_position(0) {
     int Ymax = 55, Xmax = 204;
 
@@ -16,18 +18,20 @@ Grid::Grid(WINDOW *win): window(win), current_position(0) {
     for (int i = 1; i < (Ymax / 2) - 1; i += 2) {
         int Xpos = 1;
         for (int j = 1; j < (Xmax / 2) - 2; j += 10) {
-            Cell* cell =new Cell(Xpos, Ypos, j, i, win, std::to_string(0), info_window);
+            std::shared_ptr<Cell> cell (new Cell(Xpos, Ypos, j, i, win, std::to_string(0), info_window));
             for (int k = cell->getContent().length(); k < 9; k++)
                 cell->setContent(cell->getContent() + ' ');
-            cells.push_back(cell);
+
+            cells.push_back(std::move(cell));
             Xpos++;
-            mvwprintw(win, i, j, cell->getContent().c_str());
+
+
         }
         Ypos++;
     }
 
-    menu_options = new Menu_option;
-    info_menu_ = new info_menu(info_window);
+    menu_options=std::move(std::make_unique<Menu_option> ( ));
+    info_menu_ = std::move(std::make_unique<info_menu> ( info_window));
 }
 
 void Grid::build_grid() {
@@ -249,8 +253,8 @@ void Grid::chose(int trigger, attr_t attr, int selected_position) {
 
         case 101:
             cells[selected_position]->update();
-            for (auto cell: cells)
-                cell->setSelected(false);
+            for (auto itr=cells.begin();itr!=cells.end();itr++)
+                (*itr)->setSelected(false);
             display(grid);
             cells[selected_position]->notify();
 
@@ -459,8 +463,8 @@ void Grid::chose_right(int selected_position) {
     }
 }
 
-Grid::~Grid() {
-    for(auto itr=cells.begin();itr!=cells.end();itr++) {
-        delete (*itr);
-    }
+Grid::~Grid() = default;
+
+const std::vector<std::shared_ptr<Cell>> &Grid::get_cells() const {
+    return cells;
 }

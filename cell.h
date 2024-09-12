@@ -44,16 +44,16 @@ public:
         return highlighted;
     }
 
-    [[nodiscard]] const std::vector<subject *> &getSubjects() const;
+    [[nodiscard]] const std::vector<std::shared_ptr<subject>> &getSubjects() const;
 
     void setHighlighted(bool h) {
         Cell::highlighted = h;
     }
 
-    void insert_subject(subject* subject) override{
+    void insert_subject(std::shared_ptr<subject> subject) override{
         subjects.push_back(subject);
     }
-    void insert_observer(observer* observer)override{
+    void insert_observer(std::shared_ptr<observer> observer)override{
         observers.push_back(observer);
     }
 
@@ -194,15 +194,15 @@ public:
 
     [[nodiscard]] int getYPos() const;
 
-    [[nodiscard]] const std::vector<observer *> &getObservers() const;
+    [[nodiscard]] const std::vector<std::shared_ptr<observer>> &getObservers() const;
 
 private:
     int x_pos,y_pos,x_graphic_pos,y_graphic_pos;
     WINDOW * window;
     std::string content;
     bool highlighted;
-    std::vector<subject*> subjects;
-    std::vector<observer*> observers;
+    std::vector<std::shared_ptr<subject>> subjects;
+    std::vector<std::shared_ptr<observer>> observers;
     int current_operation;
     bool selected;
     WINDOW* info_window;

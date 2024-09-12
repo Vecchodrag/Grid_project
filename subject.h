@@ -11,7 +11,7 @@ public:
     virtual ~subject() = default;
 
     virtual void erase_last_observer()=0;
-    virtual void insert_observer(observer* observer)=0;
+    virtual void insert_observer(std::shared_ptr<observer>observer)=0;
     virtual void notify()=0;
     virtual std::string get_subject_content()=0;
     virtual int get_subject_position()=0;

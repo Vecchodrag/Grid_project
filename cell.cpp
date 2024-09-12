@@ -183,14 +183,15 @@ void Cell::display_observers(attr_t att_observer) {
 
 bool Cell::is_reachable(int current_position) {
     bool reachable=true;
-    for(auto observer: observers) {
-        if(observer->get_observer_position()==current_position)
+    for(auto itr=observers.begin();itr!=observers.end();itr++) {
+        if((*itr)->get_observer_position()==current_position)
             reachable=false;
     }
     return reachable;
 }
 
 Cell::~Cell() {
+    erase_all_subjects();
 }
 
 
@@ -203,11 +204,11 @@ int Cell::getYPos() const {
     return y_pos;
 }
 
-const std::vector<subject *> &Cell::getSubjects() const {
+const std::vector<std::shared_ptr<subject>> &Cell::getSubjects() const {
     return subjects;
 }
 
 
-const std::vector<observer *> &Cell::getObservers() const {
+const std::vector<std::shared_ptr<observer>> &Cell::getObservers() const {
     return observers;
 }

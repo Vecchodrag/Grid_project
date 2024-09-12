@@ -24,7 +24,7 @@ public:
 
 
 
-    void display_cell_info(Cell* cell);
+    void display_cell_info(std::shared_ptr<Cell> cells);
 
     WINDOW *getInfoWindow() const;
 

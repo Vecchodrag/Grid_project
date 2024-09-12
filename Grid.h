@@ -32,15 +32,14 @@ public:
 
     bool check_if_last_cell(int selected_position);
 
-    int get_current_position() const {
+    [[nodiscard]] int get_current_position() const {
         return current_position;
     }
     void set_current_position(int position) {
-            current_position = position;;
+            current_position = position;
     }
-    std::vector<Cell*>get_cells() const {
-        return cells;
-    }
+
+    [[nodiscard]] const std::vector<std::shared_ptr<Cell>> &get_cells() const;
 
     void elaborate_input(char shield[50], int p);
 
@@ -58,11 +57,11 @@ public:
     ~Grid();
 
 private:
-    std::vector<Cell*>cells;
+    std::vector<std::shared_ptr<Cell>>cells;
     int num_columns, num_rows, current_position;
     WINDOW* window;
-    Menu_option* menu_options;
-    info_menu* info_menu_;
+    std::unique_ptr<Menu_option> menu_options;
+    std::unique_ptr<info_menu> info_menu_;
 
 
 };
