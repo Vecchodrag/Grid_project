@@ -21,7 +21,7 @@ protected:
 };
 
 TEST_F(info_menuSuite,test_display_cell_info){
-    Cell*c=new Cell(1,1,1,1, nullptr,"1",i->getInfoWindow());
+    std::shared_ptr<Cell>c(new Cell(1,1,1,1, nullptr,"1",i->getInfoWindow()));
     i->display_cell_info(c);
 
 }
