@@ -17,8 +17,8 @@ void Cell::erase_all_subjects() {
 
 void Cell::notify() {
 
-    for(auto observer:observers){
-        observer->update();
+    for(auto itr=observers.begin();itr!=observers.end();itr++){
+        (*itr)->update();
     }
 }
 
@@ -51,8 +51,8 @@ void Cell::update() {
 
 void Cell::summation() {
     float sum=0;
-    for(auto subject: subjects){
-        sum+=atof(subject->get_subject_content().c_str());
+    for(auto itr=subjects.begin();itr!=subjects.end();itr++){
+        sum+=atof((*itr)->get_subject_content().c_str());
     }
     std::string sum_string=std::to_string(sum);
     if(sum>9999999||sum<(-9999999)){
@@ -81,8 +81,8 @@ void Cell::clean() {
 void Cell::mean() {
     float sum=0;
     int i=0;
-    for(auto subject: subjects){
-        sum+=atof(subject->get_subject_content().c_str());
+    for(auto itr=subjects.begin();itr!=subjects.end();itr++){
+        sum+=atof((*itr)->get_subject_content().c_str());
         i++;
     }
     insert_number(sum/i);
@@ -101,9 +101,9 @@ void Cell::insert_number(float num) {
 
 void Cell::get_max() {
     float max=atof(subjects[0]->get_subject_content().c_str());
-    for( auto subject: subjects){
-        if(atof(subject->get_subject_content().c_str())>max)
-            max=atof(subject->get_subject_content().c_str());
+    for(auto itr=subjects.begin();itr!=subjects.end();itr++){
+        if(atof((*itr)->get_subject_content().c_str())>max)
+            max=atof((*itr)->get_subject_content().c_str());
     }
     insert_number(max);
 }
@@ -111,9 +111,9 @@ void Cell::get_max() {
 void Cell::get_min() {
     float min=atof(subjects[0]->get_subject_content().c_str());
 
-    for(auto subject: subjects){
-        if(atof(subject->get_subject_content().c_str())<min)
-            min=atof(subject->get_subject_content().c_str());
+    for(auto itr=subjects.begin();itr!=subjects.end();itr++){
+        if(atof((*itr)->get_subject_content().c_str())<min)
+            min=atof((*itr)->get_subject_content().c_str());
     }
 
     insert_number(min);
@@ -121,14 +121,14 @@ void Cell::get_min() {
 
 int Cell::how_many_subjects() {
     int num_subjects=0;
-    for(auto subject:subjects)
+    for(auto itr=subjects.begin();itr!=subjects.end();itr++)
         num_subjects++;
     return num_subjects;
 }
 
 int Cell::how_many_observers() {
     int num_observers=0;
-    for(auto observer:observers)
+    for(auto itr=observers.begin();itr!=observers.end();itr++)
         num_observers++;
     return num_observers;
 }
@@ -151,12 +151,12 @@ void Cell::erase_specific_observer(const int obs_grid_pos) {
 
 void Cell::display_subjects(attr_t att_subject) {
     std::string content;
-    for(auto subject: subjects) {
+    for(auto itr=subjects.begin();itr!=subjects.end();itr++) {
         wattron(window,att_subject);
-        content=subject->get_subject_content();
+        content=(*itr)->get_subject_content();
         for(int i=content.length();i<9;i++)
             content=content+' ';
-        mvwprintw(window,subject->get_subject_graphic_posY(),subject->get_subject_graphic_posX(),content.c_str());
+        mvwprintw(window,(*itr)->get_subject_graphic_posY(),(*itr)->get_subject_graphic_posX(),content.c_str());
 
 
         wattroff(window,att_subject);
@@ -167,12 +167,12 @@ void Cell::display_subjects(attr_t att_subject) {
 
 void Cell::display_observers(attr_t att_observer) {
     std::string content;
-    for(auto observer: observers) {
+    for(auto itr=observers.begin();itr!=observers.end();itr++) {
         wattron(window,att_observer);
-        content=observer->get_observer_content();
+        content=(*itr)->get_observer_content();
         for(int i=content.length();i<9;i++)
             content=content+' ';
-        mvwprintw(window,observer->get_observer_graphic_posY(),observer->get_observer_graphic_posX(),content.c_str());
+        mvwprintw(window,(*itr)->get_observer_graphic_posY(),(*itr)->get_observer_graphic_posX(),content.c_str());
 
 
         wattroff(window,att_observer);

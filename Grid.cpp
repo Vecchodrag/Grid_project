@@ -175,10 +175,10 @@ void Grid::move(int trigger, attr_t attribute) {
 }
 
 void Grid::display(attr_t attr) {
-    for (auto cell: cells) {
-        if (cell->isHighlighted())
+    for (auto itr=cells.begin();itr!=cells.end();itr++) {
+        if ((*itr)->isHighlighted())
             wattron(window, attr);
-        mvwprintw(window, cell->getYGraphicPos(), cell->getXGraphicPos(), cell->getContent().c_str());
+        mvwprintw(window, (*itr)->getYGraphicPos(), (*itr)->getXGraphicPos(), (*itr)->getContent().c_str());
         wattroff(window, attr);
     }
 
@@ -265,8 +265,8 @@ void Grid::chose(int trigger, attr_t attr, int selected_position) {
 
 bool Grid::check_if_last_cell(int selected_position) {
     int num_sel_cells = 1;
-    for (auto cell: cells) {
-        if (cell->isSelected())
+    for (auto itr=cells.begin();itr!=cells.end();itr++) {
+        if ((*itr)->isSelected())
             num_sel_cells++;
     }
     num_sel_cells += cells[selected_position]->how_many_observers();
@@ -460,7 +460,7 @@ void Grid::chose_right(int selected_position) {
 }
 
 Grid::~Grid() {
-    for(auto cell:cells) {
-        delete cell;
+    for(auto itr=cells.begin();itr!=cells.end();itr++) {
+        delete (*itr);
     }
 }
