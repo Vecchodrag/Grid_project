@@ -2,34 +2,25 @@
 // Created by edoardo on 30/08/24.
 //
 #include "Grid.h"
-
 #include <memory>
 
 Grid::Grid(WINDOW *win): window(win), current_position(0) {
     int Ymax = 55, Xmax = 204;
-
     WINDOW *info_window = newwin(Ymax / 2, 40, Ymax / 4, 0);
     box(info_window, 0, 0);
-
-
     build_grid();
     int Ypos = 1;
-
     for (int i = 1; i < (Ymax / 2) - 1; i += 2) {
         int Xpos = 1;
         for (int j = 1; j < (Xmax / 2) - 2; j += 10) {
             std::shared_ptr<Cell> cell (new Cell(Xpos, Ypos, j, i, win, std::to_string(0), info_window));
             for (int k = cell->getContent().length(); k < 9; k++)
                 cell->setContent(cell->getContent() + ' ');
-
             cells.push_back(std::move(cell));
             Xpos++;
-
-
         }
         Ypos++;
     }
-
     menu_options=std::move(std::make_unique<Menu_option> ( ));
     info_menu_ = std::move(std::make_unique<info_menu> ( info_window));
 }
@@ -37,7 +28,6 @@ Grid::Grid(WINDOW *win): window(win), current_position(0) {
 void Grid::build_grid() {
     int Ymax = 55, Xmax = 204;
     num_columns = num_rows = 1;
-
     for (int i = 2; i < (Ymax / 2) - 1; i += 2) {
         for (int j = 1; j < (Xmax / 2) - 2; j++) {
             mvwprintw(window, i, j, "-");;
@@ -45,7 +35,6 @@ void Grid::build_grid() {
         }
         num_rows++;
     }
-
     for (int j = 10; j < (Xmax / 2) - 2; j += 10) {
         for (int i = 1; i < (Ymax / 2) - 1; i++) {
             if (!(i % 2))
@@ -90,29 +79,20 @@ void Grid::move(int trigger, attr_t attribute) {
     attr_t att_subject = COLOR_PAIR(5) | A_REVERSE;
     attr_t att_obserber = COLOR_PAIR(6) | A_REVERSE;
     keypad(window, true);
-
-
     display(attribute);
     switch (trigger) {
         case KEY_RIGHT:
             move_right();
             break;
-
-
         case KEY_LEFT:
             move_left();
             break;
-
-
         case KEY_UP:
             move_up();
             break;
-
-
         case KEY_DOWN:
             move_down();
             break;
-
         case 10:
             display(selected_menu_item);
             int choise;
@@ -148,8 +128,6 @@ void Grid::move(int trigger, attr_t attribute) {
                         if (c == 'e' || (check_if_last_cell(p) && c != 'x'))
                             chose('e', menu, p);
                     }
-
-
                     cells[current_position]->setHighlighted(false);
                     current_position = p;
                     cells[current_position]->setHighlighted(true);
@@ -157,8 +135,6 @@ void Grid::move(int trigger, attr_t attribute) {
                     if (cells[p]->getCurrentOperation() == 4) {
                         break;
                     }
-
-
                     if (c == 'e' || !(check_if_last_cell(p) && c != 'x'))
                         break;
                 }
@@ -166,26 +142,23 @@ void Grid::move(int trigger, attr_t attribute) {
                 menu_options->display_menu(menu_options->getPos(), input_attr);
             }
             menu_options->display_menu(menu_options->getPos(),A_REVERSE);
-
         default:
             break;
     }
     cells[current_position]->setHighlighted(true);
-
     display(grid);
     cells[current_position]->display_subjects(att_subject);
     cells[current_position]->display_observers(att_obserber);
     info_menu_->display_cell_info(cells[current_position]);
 }
 
-void Grid::display(attr_t attr) {
+void Grid::display(attr_t attr) const{
     for (auto itr=cells.begin();itr!=cells.end();itr++) {
         if ((*itr)->isHighlighted())
             wattron(window, attr);
         mvwprintw(window, (*itr)->getYGraphicPos(), (*itr)->getXGraphicPos(), (*itr)->getContent().c_str());
         wattroff(window, attr);
     }
-
     wrefresh(window);
     refresh();
 }
@@ -198,33 +171,24 @@ void Grid::chose(int trigger, attr_t attr, int selected_position) {
     init_pair(5,COLOR_RED,COLOR_BLACK);
     init_pair(6,COLOR_BLUE,COLOR_BLACK);
     attr_t grid = COLOR_PAIR(2) | A_REVERSE;
-
     int last;
-
     info_menu_->show_info(
         "Use arrow keys to move in the grid.   When you want to select a cell, press enter.                                If you want to exit or go back, press x. To get the result of the selected  operation, press e. You cannot select observer cells as a subject.",
         14);
-
-
     switch (trigger) {
         case KEY_RIGHT:
             chose_right(selected_position);
             break;
-
         case KEY_LEFT:
             chose_left(selected_position);
             break;
-
         case KEY_UP:
             chose_up(selected_position);
             break;
-
         case KEY_DOWN:
             chose_down(selected_position);
             break;
-
         case 10:
-
             cells[selected_position]->insert_subject(cells[current_position]);
             cells[current_position]->insert_observer(cells[selected_position]);
             cells[current_position]->setSelected(true);
@@ -234,40 +198,28 @@ void Grid::chose(int trigger, attr_t attr, int selected_position) {
                 else
                     chose(KEY_LEFT, attr, selected_position);
             }
-
-
             break;
-
-
         case 120:
             last = cells[selected_position]->get_last_subject_position();
             cells[selected_position]->erase_last_subject();
             cells[last]->setSelected(false);
             cells[last]->erase_specific_observer(cells[selected_position]->get_position());
-
-
             wrefresh(window);
-
-
             break;
-
         case 101:
             cells[selected_position]->update();
             for (auto itr=cells.begin();itr!=cells.end();itr++)
                 (*itr)->setSelected(false);
             display(grid);
             cells[selected_position]->notify();
-
-
         default:
             break;
     }
-
     cells[current_position]->setHighlighted(true);
     display(attr);
 }
 
-bool Grid::check_if_last_cell(int selected_position) {
+bool Grid::check_if_last_cell(int selected_position)const {
     int num_sel_cells = 1;
     for (auto itr=cells.begin();itr!=cells.end();itr++) {
         if ((*itr)->isSelected())
@@ -279,18 +231,15 @@ bool Grid::check_if_last_cell(int selected_position) {
     return false;
 }
 
-void Grid::elaborate_input(char shield[50], int p) {
+void Grid::elaborate_input(char shield[50], int p)  {
     build_grid();
     std::string shield_content = shield;
     for (int i = 0; i < 50; i++)
         shield[i] = '0';
-
-
     curs_set(0);
     noecho();
     keypad(window, true);
     bool is_a_number = true;
-
     for (int i = 0, dot = 0, minus = 0; i < shield_content.length(); i++) {
         if (shield_content[i] == '.')
             dot++;
@@ -316,21 +265,18 @@ void Grid::elaborate_input(char shield[50], int p) {
         } else {
             if (shield_content.empty())
                 shield_content = '0';
-
-
             cells[current_position]->setContent(shield_content);
             for (int i = cells[current_position]->getContent().length(); i < 9; i++)
                 cells[current_position]->
                         setContent(cells[current_position]->getContent() + ' ');
             display(A_REVERSE);
-
             cells[p]->erase_all_subjects();
             cells[current_position]->notify();
         }
     }
 }
 
-void Grid::display_selected(attr_t selected_menu_item, int p, attr_t att_obserber) {
+void Grid::display_selected(attr_t selected_menu_item, int p, attr_t att_observer) const{
     for (auto itr=cells.begin();itr!=cells.end();itr++) {
         if ((*itr)->isSelected()) {
             wattron(window, selected_menu_item);
@@ -343,7 +289,7 @@ void Grid::display_selected(attr_t selected_menu_item, int p, attr_t att_obserbe
     wattron(window, A_REVERSE);
     mvwprintw(window, cells[p]->getYGraphicPos(), cells[p]->getXGraphicPos(), cells[p]->getContent().c_str());
     wattroff(window, A_REVERSE);
-    cells[p]->display_observers(att_obserber);
+    cells[p]->display_observers(att_observer);
 }
 
 void Grid::move_right() {
@@ -351,7 +297,6 @@ void Grid::move_right() {
         cells[current_position]->setHighlighted(false);
         current_position++;
     }
-
 }
 
 void Grid::move_left() {

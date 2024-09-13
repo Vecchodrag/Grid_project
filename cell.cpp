@@ -2,10 +2,7 @@
 // Created by edoardo on 30/08/24.
 //
 #include "cell.h"
-
-
 void Cell::erase_all_subjects() {
-
         for(int i=how_many_subjects()-1;i>=0;i--){
             subjects[i]->erase_specific_observer(this->get_position());
             erase_last_subject();
@@ -13,17 +10,13 @@ void Cell::erase_all_subjects() {
 
 }
 
-
-
 void Cell::notify() {
-
     for(auto itr=observers.begin();itr!=observers.end();itr++){
         (*itr)->update();
     }
 }
 
 void Cell::update() {
-
     switch (this->current_operation) {
         case 0:
             this->get_max();
@@ -43,11 +36,7 @@ void Cell::update() {
 
             break;
     }
-
-
 }
-
-
 
 void Cell::summation() {
     float sum=0;
@@ -60,11 +49,7 @@ void Cell::summation() {
         mvwprintw(info_window,1,1,"the result is to big to display.");
         mvwprintw(info_window,2,1,"Press a key to continue: ");
         wrefresh(info_window);
-
         getch();
-
-
-
         erase_all_subjects();
         setCurrentOperation(4);
         sum=0;
@@ -110,23 +95,21 @@ void Cell::get_max() {
 
 void Cell::get_min() {
     float min=atof(subjects[0]->get_subject_content().c_str());
-
     for(auto itr=subjects.begin();itr!=subjects.end();itr++){
         if(atof((*itr)->get_subject_content().c_str())<min)
             min=atof((*itr)->get_subject_content().c_str());
     }
-
     insert_number(min);
 }
 
-int Cell::how_many_subjects() {
+int Cell::how_many_subjects() const {
     int num_subjects=0;
     for(auto itr=subjects.begin();itr!=subjects.end();itr++)
         num_subjects++;
     return num_subjects;
 }
 
-int Cell::how_many_observers() {
+int Cell::how_many_observers() const{
     int num_observers=0;
     for(auto itr=observers.begin();itr!=observers.end();itr++)
         num_observers++;
@@ -140,16 +123,13 @@ int Cell::get_position() const {
 }
 
 void Cell::erase_specific_observer(const int obs_grid_pos) {
-
     for(auto itr=observers.begin();itr<observers.end();itr++){
-        if((*itr)->get_observer_position()==obs_grid_pos){
-
+        if((*itr)->get_observer_position()==obs_grid_pos)
             observers.erase(itr,itr+1);
-            }
     }
 }
 
-void Cell::display_subjects(attr_t att_subject) {
+void Cell::display_subjects(attr_t att_subject) const {
     std::string content;
     for(auto itr=subjects.begin();itr!=subjects.end();itr++) {
         wattron(window,att_subject);
@@ -157,15 +137,11 @@ void Cell::display_subjects(attr_t att_subject) {
         for(int i=content.length();i<9;i++)
             content=content+' ';
         mvwprintw(window,(*itr)->get_subject_graphic_posY(),(*itr)->get_subject_graphic_posX(),content.c_str());
-
-
         wattroff(window,att_subject);
-
-
     }
 }
 
-void Cell::display_observers(attr_t att_observer) {
+void Cell::display_observers(attr_t att_observer) const{
     std::string content;
     for(auto itr=observers.begin();itr!=observers.end();itr++) {
         wattron(window,att_observer);
@@ -173,15 +149,11 @@ void Cell::display_observers(attr_t att_observer) {
         for(int i=content.length();i<9;i++)
             content=content+' ';
         mvwprintw(window,(*itr)->get_observer_graphic_posY(),(*itr)->get_observer_graphic_posX(),content.c_str());
-
-
         wattroff(window,att_observer);
-
-
     }
 }
 
-bool Cell::is_reachable(int current_position) {
+bool Cell::is_reachable(int current_position)const {
     bool reachable=true;
     for(auto itr=observers.begin();itr!=observers.end();itr++) {
         if((*itr)->get_observer_position()==current_position)
@@ -194,11 +166,9 @@ Cell::~Cell() {
     erase_all_subjects();
 }
 
-
 int Cell::getXPos() const {
     return x_pos;
 }
-
 
 int Cell::getYPos() const {
     return y_pos;
@@ -207,7 +177,6 @@ int Cell::getYPos() const {
 const std::vector<std::shared_ptr<subject>> &Cell::getSubjects() const {
     return subjects;
 }
-
 
 const std::vector<std::shared_ptr<observer>> &Cell::getObservers() const {
     return observers;

@@ -13,30 +13,14 @@
 class Menu_option{
 public:
     Menu_option();
-
-
-
     void move(int choise);
-
-
-
-
-
-    void display_menu(int highlight,attr_t attr);
-
-
-
-
-    int getPos() const {
+    void display_menu(int highlight,attr_t attr)const;
+    [[nodiscard]] int getPos() const {
         return pos;
     }
-
 private:
     std::string options[5]={"Maximus","Minimum","Mean","Summation","Insert number"};
     WINDOW * menu_window;
     int pos;
-
 };
-
-
-#endif //GRID_TEST_MENU_H
+#endif //GRID_TEST_MENU_Hclass

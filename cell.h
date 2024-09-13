@@ -3,22 +3,18 @@
 //
 
 
-#include <memory>
-#ifndef GRID_TEST_CELL_H
 
+#ifndef GRID_TEST_CELL_H
+#include <memory>
 #include "string"
 #include "ncurses.h"
 #include "observer.h"
 #include "subject.h"
 #include "vector"
 #include "memory.h"
-
-
-
 class Cell final : public observer,public subject{
 public:
     Cell(int X_pos,int Y_pos,int X_graphic_pos, int Y_graphic_pos,WINDOW* win, std::string cont,WINDOW* i): x_pos(X_pos),x_graphic_pos(X_graphic_pos),y_pos(Y_pos),y_graphic_pos(Y_graphic_pos),content(cont),window(win),highlighted(
-
             false),selected(false),current_operation(4),info_window((i)){}
 
     [[nodiscard]] int getYGraphicPos() const {
@@ -29,7 +25,6 @@ public:
         return x_graphic_pos;
     }
 
-
     [[nodiscard]] const std::string &getContent() const {
         return content;
     }
@@ -39,13 +34,11 @@ public:
     }
 
     [[nodiscard]] int getXPos() const;
-
     [[nodiscard]] bool isHighlighted() const {
         return highlighted;
     }
 
     [[nodiscard]] const std::vector<std::shared_ptr<subject>> &getSubjects() const;
-
     void setHighlighted(bool h) {
         Cell::highlighted = h;
     }
@@ -53,6 +46,7 @@ public:
     void insert_subject(std::shared_ptr<subject> subject) override{
         subjects.push_back(subject);
     }
+
     void insert_observer(std::shared_ptr<observer> observer)override{
         observers.push_back(observer);
     }
@@ -60,15 +54,13 @@ public:
     void erase_last_subject()override{
         subjects.pop_back();
     }
+
     void erase_last_observer() override{
         observers.pop_back();
     }
 
     void erase_all_subjects();
-
-
     void notify() override;
-
     [[nodiscard]] bool isSelected() const {
         return selected;
     }
@@ -78,45 +70,24 @@ public:
     }
 
     void update()override;
-
-    std::string get_subject_content()override{
+    [[nodiscard]] std::string get_subject_content()const override{
         return this->content;
+    }
 
-    }
-    int get_subject_position()override{
-        return get_position();
-    }
-    int get_observer_position()override{
+    [[nodiscard]] int get_subject_position()const override{
         return get_position();
     }
 
-
+    [[nodiscard]] int get_observer_position()const override{
+        return get_position();
+    }
 
     void summation();
-
-
-
-
     void clean();
-
-
-
     void mean();
-
-
-
-
     void insert_number(float num);
-
-
     void get_max();
-
-
     void get_min();
-
-
-
-
     [[nodiscard]] int getCurrentOperation() const {
         return current_operation;
     }
@@ -125,63 +96,38 @@ public:
         current_operation = currentOperation;
     }
 
-    int how_many_subjects();
-
-
-
-
-    int how_many_observers();
-
-
-
-
-
-    int get_last_subject_position(){
+    [[nodiscard]] int how_many_subjects()const;
+    [[nodiscard]] int how_many_observers() const;
+    [[nodiscard]] int get_last_subject_position()const {
         return subjects[how_many_subjects()-1]->get_subject_position();
     }
 
     [[nodiscard]] int get_position () const;
-
-
-
     void erase_specific_observer(int obs_grid_pos) override;
-
-
-
-     int get_subject_graphic_posY() override {
-        return y_graphic_pos;
-    }
-    int get_subject_graphic_posX()override {
-        return x_graphic_pos;
-    }
-    void display_subjects(attr_t att_subject);
-
-
-
-
-    int get_observer_graphic_posY() override {
+     [[nodiscard]] int get_subject_graphic_posY() const override {
         return y_graphic_pos;
     }
 
-    int get_observer_graphic_posX()override {
+    [[nodiscard]] int get_subject_graphic_posX()const override {
         return x_graphic_pos;
     }
 
-    std::string get_observer_content() override {
+    void display_subjects(attr_t att_subject) const;
+    [[nodiscard]] int get_observer_graphic_posY()const override {
+        return y_graphic_pos;
+    }
+
+    [[nodiscard]] int get_observer_graphic_posX() const override {
+        return x_graphic_pos;
+    }
+
+
+    [[nodiscard]] std::string get_observer_content()const override {
         return this->content;
     }
 
-
-    void display_observers(attr_t att_observer);
-
-
-
-
-
-    bool is_reachable(int current_position);
-
-
-
+    void display_observers(attr_t att_observer) const;
+    [[nodiscard]] bool is_reachable(int current_position)const;
     [[nodiscard]] int x_pos1() const {
         return x_pos;
     }
@@ -191,9 +137,7 @@ public:
     }
 
     ~Cell() override;
-
     [[nodiscard]] int getYPos() const;
-
     [[nodiscard]] const std::vector<std::shared_ptr<observer>> &getObservers() const;
 
 private:

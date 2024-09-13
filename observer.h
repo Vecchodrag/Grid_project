@@ -8,17 +8,13 @@ class subject;
 class observer{
 public:
     virtual ~observer() = default;
-
     virtual void update()=0;
     virtual void erase_last_subject()=0;
     virtual void insert_subject(std::shared_ptr<subject> subject)=0;
-    virtual int get_observer_position()=0;
-    virtual std::string get_observer_content()=0;
-    virtual int get_observer_graphic_posY()=0;
-    virtual int get_observer_graphic_posX()=0;
-
-
-
+    [[nodiscard]] virtual int get_observer_position() const=0;
+    [[nodiscard]] virtual std::string get_observer_content() const=0;
+    [[nodiscard]] virtual int get_observer_graphic_posY() const=0;
+    [[nodiscard]] virtual int get_observer_graphic_posX()const=0;
 };
 #define GRID_TEST_OBSERVER_H
 

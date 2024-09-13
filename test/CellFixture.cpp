@@ -73,8 +73,17 @@ TEST_F(CellSuite, test_update){
 }
 
 TEST_F(CellSuite,test_summatory){
+    std::shared_ptr<Cell>f(new Cell(4,4,2,2,w,"-9",i));
+    c->insert_subject(f);
+    f->insert_observer(c);
     c->summation();
-    ASSERT_EQ(c->getContent(),"2.000000 ");
+
+    ASSERT_EQ(c->getContent(),"-7.00000 ");
+    std::shared_ptr<Cell>y(new Cell(4,4,2,2,w,"9",i));
+    c->insert_subject(y);
+    y->insert_observer(c);
+    c->summation();
+
     std::shared_ptr<Cell>h(new Cell(4,4,2,2,w,"9999999",i));
     c->insert_subject(h);
     h->insert_observer(c);
@@ -93,6 +102,11 @@ TEST_F(CellSuite,test_mean){
     h->insert_observer(c);
     c->mean();
     ASSERT_EQ(c->getContent(),"3.000000 ");
+    std::shared_ptr<Cell>f(new Cell(4,4,2,2,w,"-9",i));
+    c->insert_subject(f);
+    f->insert_observer(c);
+    c->mean();
+    ASSERT_EQ(c->getContent(),"-1.00000 ");
 
 }
 
@@ -102,6 +116,11 @@ TEST_F(CellSuite,test_max){
     h->insert_observer(c);
     c->get_max();
     ASSERT_EQ(c->getContent(),"4.000000 ");
+    std::shared_ptr<Cell>f(new Cell(4,4,2,2,w,"9",i));
+    c->insert_subject(f);
+    f->insert_observer(c);
+    c->get_max();
+    ASSERT_EQ(c->getContent(),"9.000000 ");
 
 }
 
@@ -111,6 +130,11 @@ TEST_F(CellSuite,test_min){
     h->insert_observer(c);
     c->get_min();
     ASSERT_EQ(c->getContent(),"2.000000 ");
+    std::shared_ptr<Cell>f(new Cell(4,4,2,2,w,"-9",i));
+    c->insert_subject(f);
+    f->insert_observer(c);
+    c->get_min();
+    ASSERT_EQ(c->getContent(),"-9.00000 ");
 
 
 }
